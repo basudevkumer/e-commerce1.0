@@ -1,12 +1,11 @@
-import DiscountCard from "@/components/commonComponent/commonDisCountCard/Index";
-import ProductCard from "@/components/commonComponent/commonProductCard";
+import DiscountCard from "@components/commonComponent/commonDiscountCard/DiscountCard";
+import ProductCard from "@/components/commonComponent/commonProductCard/ProductCard";
 import Container from "@/components/commonComponent/containers/Container";
 import { allIcons } from "@/helpers/IconProvider";
 import { useCategory, useSingleCategoryProduct } from "@/hooks/useCategory";
 import React, { useState } from "react";
 import Loading from "../loading/Index";
 import Error from "../error/Index";
-
 const FeatureProduct = () => {
   // create a object
   let [featureNavText, setFeatureNavText] = useState([

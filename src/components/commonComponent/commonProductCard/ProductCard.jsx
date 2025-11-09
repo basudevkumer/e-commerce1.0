@@ -1,5 +1,5 @@
 import React from "react";
-import Star from "@components/commonComponent/commonStar/index";
+import Star from "@/components/commonComponent/commonStar/Star";
 //import from iconProvider
 
 const ProductCard = ({ product }) => {
