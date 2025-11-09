@@ -1,79 +1,92 @@
-import DiscountCard from "@/components/commonComponent/commonDisCountCard";
+import DiscountCard from "@/components/commonComponent/commonDisCountCard/Index";
 import ProductCard from "@/components/commonComponent/commonProductCard";
 import Container from "@/components/commonComponent/containers/Container";
 import { allIcons } from "@/helpers/IconProvider";
-import { useCategory } from "@/hooks/useCategory";
+import { useCategory, useSingleCategoryProduct } from "@/hooks/useCategory";
 import React, { useState } from "react";
+import Loading from "../loading/Index";
+import Error from "../error/Index";
 
 const FeatureProduct = () => {
-  console.log("hello");
-  
   // create a object
   let [featureNavText, setFeatureNavText] = useState([
-    { id: 1, text: "All Product", value: "products" },
+    { id: 1, text: "All Product", value: "" },
     { id: 2, text: "Smart Phone", value: "smartphones" },
     { id: 3, text: "Laptop", value: "laptops" },
     { id: 4, text: "Mobile Acc", value: "mobile-accessories" },
     { id: 5, text: "jewellery", value: "womens-jewellery" },
-    { id: 6, text: "Browse All Product", value: "products" },
+    { id: 6, text: "Browse All Product", value: "" },
   ]);
   // import from right arrow
   const { rightArrow } = allIcons;
 
-  // import API info from useCategory()
-  let { data, isPending, error } = useCategory();
+  // import API all product info from useCategory()
+  let {
+    data: allProductElement,
+    isPending: allProductElementIsLoading,
+    error: allProductElementIsError,
+  } = useCategory();
+
+  // for single categroy product (useState)
+  let [categoryValue, setCategoryValue] = useState("");
+
+  // import API all single category product info from useCategory()
+  let {
+    data: singleCategoryData,
+    isPending: singleCategoryLoading,
+    isError: singleCategoryError,
+  } = useSingleCategoryProduct(categoryValue);
+
+  //create a function
+
+  let handleClick = (value) => {
+    setCategoryValue(value);
+  };
+
   // show pending skeleton
-  if (isPending) {
+
+  if (allProductElementIsLoading && !categoryValue) {
     return (
       <div className="py-[72px]">
         <Container>
-          <div className="grid grid-cols-4">
-            <div className=""></div>
-            <div className="col-span-3">
+          <div className="grid grid-cols-4 gap-6">
+            <div>
+              <div
+                className={`grid grid-rows-2 gap-y-4 bg-gray-100 w-full h-full animate-pulse $`}
+              >
+                {/* Top Text Part - Skeleton */}
+                <div className="pt-[30px] flex flex-col items-center">
+                  {/* Discount Title */}
+                  <div className="h-6 w-32 bg-gray-300 rounded mb-2"></div>
+
+                  {/* Big Discount Text */}
+                  <div className="h-16 w-64 bg-gray-400 rounded-lg mt-2 mb-4"></div>
+
+                  {/* Items Name */}
+                  <div className="h-5 w-48 bg-gray-300 rounded"></div>
+
+                  {/* Timer */}
+                  <div className="mt-6 mb-8 flex items-center gap-3">
+                    <span className="h-5 w-28 bg-gray-300 rounded"></span>
+                    <div className="h-10 w-32 bg-gray-200 rounded"></div>
+                  </div>
+
+                  {/* Shop Now Button */}
+                  <div className="h-12 w-36 bg-primary_500 rounded-lg opacity-80"></div>
+                </div>
+
+                {/* Bottom Image Part - Skeleton */}
+                <div className="relative">
+                  <div className="h-full w-full bg-gray-300 rounded-lg"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-lg"></div>
+                </div>
+              </div>
+            </div>
+            <div className="col-span-3 flex flex-col gap-y-6">
+              <div className="bg-yellow-300 opacity-75 w-full h-5 rounded-full"></div>
               <div className="grid grid-cols-4 gap-4">
                 {[...Array(8)].map((_, index) => {
-                  return (
-                    <div className="border border-gray_100 relative p-4 rounded cursor-pointer w-full h-[320px] shadow-xl">
-                      {/* Skeleton Container */}
-                      <div className="animate-pulse flex flex-col h-full">
-                        {/* Tag Skeleton */}
-                        <div className="absolute left-3 top-3">
-                          <div className="bg-gray-300 rounded w-16 h-6"></div>
-                        </div>
-
-                        {/* Image Skeleton */}
-                        <div className="w-full h-[175px] bg-gray-300 rounded"></div>
-
-                        {/* Content Skeleton */}
-                        <div className="pt-6 space-y-3 flex-1">
-                          {/* Rating Skeleton */}
-                          <div className="flex items-center gap-x-1">
-                            <div className="flex gap-x-1">
-                              {[1, 2, 3, 4, 5].map((i) => (
-                                <div
-                                  key={i}
-                                  className="w-5 h-5 bg-gray-300 rounded-full"
-                                ></div>
-                              ))}
-                            </div>
-                            <div className="w-12 h-4 bg-gray-300 rounded ml-2"></div>
-                          </div>
-
-                          {/* Title Skeleton */}
-                          <div className="space-y-2">
-                            <div className="h-4 bg-gray-300 rounded w-full"></div>
-                            <div className="h-4 bg-gray-300 rounded w-4/5"></div>
-                          </div>
-
-                          {/* Price Skeleton */}
-                          <div className="flex gap-x-2 items-center">
-                            <div className="h-5 bg-gray-300 rounded w-16"></div>
-                            <div className="h-6 bg-gray-300 rounded w-20"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  );
+                  return <Loading key={index} />;
                 })}
               </div>
             </div>
@@ -82,22 +95,73 @@ const FeatureProduct = () => {
       </div>
     );
   }
-  // show error
-  if (error) {
+
+  if (singleCategoryLoading && categoryValue) {
     return (
-      <div className="pt-[72px]">
+      <div className="py-[72px]">
         <Container>
-          <div className="grid grid-cols-4 ">
-            <div className=""></div>{" "}
-            <div className="col-span-3 text-center bg-danger_500 p-6 text-gray_00 xl_600">
-              Have an Product Card error......
+          <div className="grid grid-cols-4 gap-6">
+            <div>
+              <div
+                className={`grid grid-rows-2 gap-y-4 bg-gray-100 w-full h-full animate-pulse $`}
+              >
+                {/* Top Text Part - Skeleton */}
+                <div className="pt-[30px] flex flex-col items-center">
+                  {/* Discount Title */}
+                  <div className="h-6 w-32 bg-gray-300 rounded mb-2"></div>
+
+                  {/* Big Discount Text */}
+                  <div className="h-16 w-64 bg-gray-400 rounded-lg mt-2 mb-4"></div>
+
+                  {/* Items Name */}
+                  <div className="h-5 w-48 bg-gray-300 rounded"></div>
+
+                  {/* Timer */}
+                  <div className="mt-6 mb-8 flex items-center gap-3">
+                    <span className="h-5 w-28 bg-gray-300 rounded"></span>
+                    <div className="h-10 w-32 bg-gray-200 rounded"></div>
+                  </div>
+
+                  {/* Shop Now Button */}
+                  <div className="h-12 w-36 bg-primary_500 rounded-lg opacity-80"></div>
+                </div>
+
+                {/* Bottom Image Part - Skeleton */}
+                <div className="relative">
+                  <div className="h-full w-full bg-gray-300 rounded-lg"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-lg"></div>
+                </div>
+              </div>
+            </div>
+            <div className="col-span-3 flex flex-col gap-y-6">
+              <div className="bg-yellow-300 opacity-75 w-full h-5 rounded-full"></div>
+              <div className="grid grid-cols-4 gap-4">
+                {[...Array(8)].map((_, index) => {
+                  return <Loading key={index} />;
+                })}
+              </div>
             </div>
           </div>
         </Container>
       </div>
     );
   }
-  let productData = data || [];
+
+  // show error
+
+  if (allProductElementIsError) {
+    return <Error />;
+  }
+
+  if (singleCategoryError) {
+    return <Error />;
+  }
+
+  //  catch two api data all data by tarnary logic
+
+  let productData = categoryValue
+    ? singleCategoryData || []
+    : allProductElement || [];
 
   return (
     <div className="py-[72px]">
@@ -114,7 +178,7 @@ const FeatureProduct = () => {
                   let browserText = items.text === "Browse All Product";
 
                   return (
-                    <p
+                    <button
                       className={`sm_400 text-gray_600 hover:sm_600 cursor-pointer  duration-300
                         ${
                           browserText
@@ -123,20 +187,22 @@ const FeatureProduct = () => {
                         }
                         `}
                       key={items.id}
+                      onClick={() => handleClick(items.value)}
                     >
                       {items.text}
                       {browserText && (
                         <span className="text-sm"> {rightArrow}</span>
                       )}
-                    </p>
+                    </button>
                   );
                 })}
               </div>
             </div>
-   
 
             <div className="grid grid-cols-4 gap-4">
-              <ProductCard productCards={(productData)} />
+              {productData?.slice(0, 8).map((items, index) => {
+                return <ProductCard product={items} key={index} />;
+              })}
             </div>
           </div>
         </div>

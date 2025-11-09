@@ -19,6 +19,8 @@ import { GrTrophy } from "react-icons/gr";
 import { BsWalletFill } from "react-icons/bs";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { IoStar } from "react-icons/io5";
+import { IoStarHalfOutline } from "react-icons/io5";
+import { IoStarOutline } from "react-icons/io5";
 
 export const allIcons = {
   rightArrow: <FaArrowRightLong />,
@@ -54,5 +56,9 @@ export const allIcons = {
     { id: 2, icon: <FaArrowRightLong /> },
   ],
 
-  starIcon: [{ id: 1, icon: <IoStar /> }],
+  starIcon: [
+    { id: 1, icon: <IoStar /> },
+    { id: 2, icon: <IoStarHalfOutline /> },
+    { id: 3, icon: <IoStarOutline /> },
+  ],
 };
