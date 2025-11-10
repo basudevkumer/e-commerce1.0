@@ -4,6 +4,9 @@ import { allImages } from "@/helpers/ImageProvider";
 import React from "react";
 
 const Subscribe = () => {
+  /////////////////////////////////
+  /// images destructure here
+  /////////////////////////////////
   const { subscribe } = allImages;
 
   return (
@@ -28,6 +31,7 @@ const Subscribe = () => {
           </div>
           <div className="w-[500px] h-[1px] bg-gray_400 mt-8 mb-6"></div>
           <div className="flex items-center gap-x-12">
+            {/* map here */}
             {subscribe.map((items, index) => {
               return (
                 <div key={items.id}>

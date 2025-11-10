@@ -63,13 +63,13 @@ const Footer = () => {
         <Container>
           <div className="grid grid-cols-7 gap-x-6">
             <div className=" col-span-2  ">
-              <div className="">
+              <picture>
                 <img
                   src={footerLogo[0].src}
                   alt="footerLogo"
                   className="w-[177px]"
                 />
-              </div>
+              </picture>
               <div className="pt-6 flex flex-col gap-y-3">
                 <div className="flex flex-col gap-1">
                   <p className="sm_400  text-gray_500">Customer Supports:</p>
@@ -132,13 +132,13 @@ const Footer = () => {
               <div className="flex flex-col gap-y-3">
                 {appStoreBannar.map((items) => {
                   return (
-                    <div className="cursor-pointer" key={items.id}>
+                    <picture className="cursor-pointer" key={items.id}>
                       <img
                         src={items.src}
                         alt="footerAppstoreBannar"
                         className="w-full h-[70px] object-cover "
                       />
-                    </div>
+                    </picture>
                   );
                 })}
               </div>
@@ -148,7 +148,10 @@ const Footer = () => {
               <div className="flex gap-2 flex-wrap">
                 {btn.map((items, index) => {
                   return (
-                    <button className="cursor-pointer sm_500 text-gray_00 border border-gray_800  hover:bg-gray_800 hover:border-gray_00  transition duration-300 ease-in-out py-[6px] px-3 border rounded" key={items.id}>
+                    <button
+                      className="cursor-pointer sm_500 text-gray_00 border border-gray_800  hover:bg-gray_800 hover:border-gray_00  transition duration-300 ease-in-out py-[6px] px-3 border rounded"
+                      key={items.id}
+                    >
                       {items.name}
                     </button>
                   );
@@ -160,7 +163,10 @@ const Footer = () => {
       </div>
       {/* show copyright text */}
       <div className="py-6 border-t border-gray_600 text-center">
-        <p className="sm_400 text-gray_300">Kinbo - eCommerce Template © 2025. Design by Templatecookie modify by wasim and implement into code by Jhulon Kumar</p>
+        <p className="sm_400 text-gray_300">
+          Kinbo - eCommerce Template © 2025. Design by Templatecookie modify by
+          wasim and implement into code by Jhulon Kumar
+        </p>
       </div>
     </div>
   );

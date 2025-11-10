@@ -10,6 +10,7 @@ import CategoryHeading from "@/components/home/category/categoryHeading/Index";
 import FeatureProduct from "@/components/home/featureProduct/Index";
 import Subscribe from "@/components/home/subscribe/Index";
 import Footer from "@/components/commonComponent/footers/Footer";
+import HomeProdctAd from "@/components/home/HomeAd/Index";
 
 const Home = () => {
 
@@ -24,6 +25,7 @@ const Home = () => {
       <CategoryHeading/>
       <Category />
       <FeatureProduct/>
+      <HomeProdctAd/>
       <Subscribe/>
       <Footer/>
     </>

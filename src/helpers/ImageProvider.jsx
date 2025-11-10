@@ -12,6 +12,8 @@ import Samsung from "@images/samsung.png";
 import FooterLogo from "@images/footerLogo.png";
 import MacAppStoreBannar from "@images/appleBannar.png";
 import GoogleAppStoreBannar from "@images/googleBannar.png";
+import GoogleAd from "@images/googleAd.png";
+import XiamiAd from "@images/xiamiAd.png";
 
 export const allImages = {
   logo: Logo,
@@ -34,4 +36,9 @@ export const allImages = {
     { id: 1, src: GoogleAppStoreBannar },
     { id: 2, src: MacAppStoreBannar },
   ],
+  homeAds: [
+    { id: 1, src: GoogleAd },
+    { id: 2, src: XiamiAd },
+  ],
+
 };
