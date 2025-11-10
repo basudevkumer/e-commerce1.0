@@ -8,6 +8,8 @@ import Category from "@/components/home/category/categoryDataFetch/Index";
 import FeatureNav from "@/components/home/feature/Index";
 import CategoryHeading from "@/components/home/category/categoryHeading/Index";
 import FeatureProduct from "@/components/home/featureProduct/Index";
+import Subscribe from "@/components/home/subscribe/Index";
+import Footer from "@/components/commonComponent/footers/Footer";
 
 const Home = () => {
 
@@ -22,6 +24,8 @@ const Home = () => {
       <CategoryHeading/>
       <Category />
       <FeatureProduct/>
+      <Subscribe/>
+      <Footer/>
     </>
   );
 };
