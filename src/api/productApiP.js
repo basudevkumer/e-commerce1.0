@@ -22,3 +22,29 @@ export let singleCategoryProductApi = async (productCategoryName = "") => {
     throw error;
   }
 };
+
+// get best deal products list....
+
+export let bestDealProduct = async (skip = 0) => {
+  try {
+    let dealProductElement = await instance.get(
+      `/products?limit=12&skip=${skip}&select=title,price,thumbnail,description`
+    );
+    return dealProductElement.data.products;
+  } catch (error) {
+    console.error("Best Deal Product Error is" + error);
+    throw error;
+  }
+};
+
+// get all category list
+
+export let allCategory = async () => {
+  try {
+    let allCategoryProdResponse = await instance.get("/products/categories");
+    return allCategoryProdResponse.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
