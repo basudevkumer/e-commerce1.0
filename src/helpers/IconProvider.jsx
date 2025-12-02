@@ -23,6 +23,8 @@ import { IoStarHalfOutline } from "react-icons/io5";
 import { IoStarOutline } from "react-icons/io5";
 import { IoHomeOutline } from "react-icons/io5";
 import { FaGreaterThan } from "react-icons/fa6";
+import { IoSearchOutline } from "react-icons/io5";
+
 
 export const allIcons = {
   rightArrow: <FaArrowRightLong />,
@@ -65,4 +67,6 @@ export const allIcons = {
   ],
   homeIcon: <IoHomeOutline />,
   greaterThan: <FaGreaterThan />,
+  searchIcon: <IoSearchOutline/>
+
 };

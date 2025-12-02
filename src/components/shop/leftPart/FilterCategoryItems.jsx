@@ -25,12 +25,12 @@ const FilterCategoryItems = ({
       data={categoryData}
       itemContent={(index, items) => {
         return (
-          <div className="flex items-center gap-x-2 py-2   ">
+          <div className="flex items-center gap-x-2 py-2 px-[6px]   ">
             <input
               type="radio"
               id={items.name}
               name="category"
-              className="cursor-pointer"
+              className="cursor-pointer "
               onChange={() => handleItemsClick(items.slug)}
             />
             <label

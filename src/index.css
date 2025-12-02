@@ -7,10 +7,6 @@
 @plugin "flowbite/plugin";
 /* flowbite source  */
 @source "../node_modules/flowbite";
-/* daisyui */
-
-
-
 
 :root {
   /* ======================================================================
@@ -341,90 +337,89 @@
                         Typography Styles area end
 ========================================================================= */
 
-/*  for pagination styles   */
-.mySwiper .swiper-pagination {
-  left: 100px !important ;
-  bottom: 25px !important;
+/*  for radio button */
+
+[type="radio"] {
+  appearance: none;
+  padding: 0;
+  print-color-adjust: exact;
+  display: inline-block;
+  vertical-align: middle;
+  background-origin: border-box;
+  user-select: none;
+  flex-shrink: 0;
+  height: 1.4rem; /*changed*/
+  width: 1.4rem; /*changed*/
+  color: var(--primary_500); /*changed*/
+  background-color: #fff;
+  border-color: --color-gray-500;
+  border-width: 1px;
+  --tw-shadow: 0 0 #0000;
 }
 
-/* autoplay progress */
-.autoplay-progress {
-  position: absolute;
-  right: 16px;
-  bottom: 16px;
-  z-index: 10;
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  color: var(--danger_500);
+[type="checkbox"]:focus,
+[type="radio"]:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  --tw-ring-inset: var(--tw-empty, /*!*/ /*!*/);
+  --tw-ring-offset-width: 2px;
+  --tw-ring-offset-color: #fff;
+  --tw-ring-color: none; /*changed*/
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0
+    var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0
+    calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow),
+    var(--tw-shadow);
 }
 
-/* autoplay progress svg */
-.autoplay-progress svg {
-  --progress: 0;
-  position: absolute;
-  left: 0;
-  top: 0px;
-  z-index: 10;
-  width: 100%;
-  height: 100%;
-  stroke-width: 4px;
-  fill: none;
-  stroke-dashoffset: calc(125.6px * (1 - var(--progress)));
-  stroke-dasharray: 125.6;
-  transform: rotate(-90deg);
-  stroke: var(--danger_500);
+[type="radio"]:checked {
+  background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='8' cy='8' r='3'/%3e%3c/svg%3e");
+  background-size: 2.5em 2.5em; /*changed*/
 }
 
-/* autoplay bullet active point css */
-
-.swiper-pagination-bullet-active {
-  background: var(--warning_500, var(--warning_500)) !important;
+[type="checkbox"]:checked {
+  background-image: url("data:image/svg+xml,%3csvg aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 16 12'%3e %3cpath stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M1 5.917 5.724 10.5 15 1.5'/%3e %3c/svg%3e");
+  background-repeat: no-repeat;
+  background-size: 0.88em 0.88em; /*changed*/
+  print-color-adjust: exact;
 }
-.swiper-pagination-bullet {
-  width: 15px !important;
-  height: 15px !important;
+[type="checkbox"]:hover {
+  border-color: var(--primary_500);
 }
-
-/*  for navigation parts */
-.swiper-button-prev {
-  left: 0px !important;
-}
-
-/*  shop pages input rardio css */
-[type='checkbox'], [type='radio'] {
-    appearance: none;
-    padding: 0;
-    print-color-adjust: exact;
-    display: inline-block;
-    vertical-align: middle;
-    background-origin: border-box;
-    user-select: none;
-    flex-shrink: 0;
-    height: 20px; /* height*/
-    width: 20px; /* width */
-    color: var(--primary_500);  /* background Color*/
-    background-color: #fff;
-    border-color: var(--gray_200);  /* border Color*/
-    border-width: 1px;
-    --tw-shadow: 0 0 #0000;
+[type="checkbox"] {
+  appearance: none;
+  padding: 0;
+  print-color-adjust: exact;
+  display: inline-block;
+  vertical-align: middle;
+  background-origin: border-box;
+  user-select: none;
+  flex-shrink: 0;
+  height: 1.5rem; /*changed*/
+  width: 1.5rem; /*changed*/
+  color: var(--primary_500); /*changed*/
+  background-color: #fff;
+  border-color: var(--gray_200);
+  border-width: 3px;
+  --tw-shadow: 0 0 #0000;
 }
 
-[type='checkbox']:focus, [type='radio']:focus {
-    outline: 2px solid transparent;
-    outline-offset: 2px;
-    --tw-ring-inset: var(--tw-empty,/*!*/ /*!*/);
-    --tw-ring-offset-width: 2px;
-    --tw-ring-offset-color: #fff;
-    --tw-ring-color: none; /* foucs border Color*/
-    --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-    --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-    box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-}
-[type='radio']:checked {
-    background-size: 1.7em 1.7em;
-}
+/* for right side input slider */
 
+[type="text"],
+&:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  --tw-ring-inset: var(--tw-empty, /*!*/ /*!*/);
+  --tw-ring-offset-width: 0px;
+  --tw-ring-offset-color: #fff;
+  --tw-ring-color: none; /*changed*/
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0
+    var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0
+    calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow),
+    var(--tw-shadow);
+  border-color: var(--color-blue-600);
+}

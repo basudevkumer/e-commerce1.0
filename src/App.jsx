@@ -7,6 +7,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import RootLayout from "@/components/rootLayout/RootLayout";
 import Shop from "@/pages/Shop";
 
+
 const App = () => {
   const queryClient = new QueryClient();
 

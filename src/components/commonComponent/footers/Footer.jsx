@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Container from "../containers/Container";
 import { allImages } from "@/helpers/ImageProvider";
 import { allIcons } from "@/helpers/IconProvider";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   //import icon form rightArrow
@@ -29,7 +30,7 @@ const Footer = () => {
   //////////////////
 
   let [link, setLink] = useState([
-    { id: 1, name: "Shop Product" },
+    { id: 1, name: "Shop Product", links: "/shop" },
     { id: 2, name: "Shoping Cart" },
     { id: 3, name: "Wishlist" },
     { id: 4, name: "Compare" },
@@ -114,14 +115,16 @@ const Footer = () => {
               <ul className="flex flex-col gap-y-[8px]">
                 {link.map((items, index) => {
                   return (
-                    <li
-                      className="group  flex items-center gap-x-2 cursor-pointer relative overflow-hidden"
-                      key={items.id}
-                    >
-                      <span className="text-[33px] bg-warning_500  absolute left-[-40px] group-hover:left-0  transition-all duration-300 ease-in-out w-[30px] h-[3px] rounded"></span>
-                      <span className=" sm_500 text-gray_400 group-hover:text-gray_00 transition-all duration-300   transfrom  group-hover:translate-x-[36px] whitespace-nowrap">
-                        {items.name}
-                      </span>
+                    <li key={items.id}>
+                      <Link
+                        to={items.links}
+                        className="group  flex items-center gap-x-2 cursor-pointer relative overflow-hidden"
+                      >
+                        <span className="text-[33px] bg-warning_500  absolute left-[-40px] group-hover:left-0  transition-all duration-300 ease-in-out w-[30px] h-[3px] rounded"></span>
+                        <span className=" sm_500 text-gray_400 group-hover:text-gray_00 transition-all duration-300   transfrom  group-hover:translate-x-[36px] whitespace-nowrap">
+                          {items.name}
+                        </span>
+                      </Link>
                     </li>
                   );
                 })}
