@@ -13,6 +13,7 @@ import ShopCheckBox from "../leftPart/ShopCheckBox";
 import PopularTags from "../leftPart/PopularTags";
 import PriceRangePresets from "../leftPart/PriceRangePresets";
 import RightSideFilter from "../rightPart/RightSideFilter";
+import ProdtRightCont from "../rightPart/ProdtRightCont";
 const ShopProductFilter = () => {
   // state manage
   // price ranger preset and slider
@@ -24,6 +25,8 @@ const ShopProductFilter = () => {
   const [brand, setBrand] = useState([]);
   // popular tags
   const [pTags, setPTags] = useState("");
+  // for searching
+  const [search, setSearch] = useState("");
 
   // all category Product name list
   const {
@@ -95,9 +98,24 @@ const ShopProductFilter = () => {
         tagItems.tags?.includes(pTags)
       );
     }
+    if (search?.trim() !== "") {
+      const searchKeyword = search?.toLowerCase().split(" ").filter(Boolean);
+
+      catchFinalValue = catchFinalValue?.filter((product) => {
+        const searchAbleText = `
+            ${product?.title || ""}
+            ${product?.description || ""}
+            ${product?.category || ""}
+            ${product?.brand || ""}
+            ${product?.tags?.flatMap((items) => items)?.join(" ") || ""}
+         `.toLowerCase();
+
+        return searchKeyword.every((items) => searchAbleText.includes(items));
+      });
+    }
 
     return catchFinalValue;
-  }, [filterPrice, brand, pTags]);
+  }, [filterPrice, brand, pTags, search]);
 
   // manage complex UI
   useEffect(() => {
@@ -105,6 +123,7 @@ const ShopProductFilter = () => {
     setPriceRange([0, 100000]);
     setPTags("");
     setPricePresetRange([0, 0]);
+    setSearch("");
   }, [selectedData]);
 
   //tag value reset || clear when brand clicked
@@ -182,13 +201,12 @@ const ShopProductFilter = () => {
             </div>
             <div className="col-span-4">
               <div>
-                <RightSideFilter />
+                <RightSideFilter onSearch={setSearch} />
               </div>
               <div className="pt-4 pb-6"></div>
-              <div className=" grid grid-cols-4 gap-4 h-fit">
-                {finalResults?.map((items, index) => {
-                  return <ProductCard product={items} key={index} />;
-                })}
+
+              <div className=" ">
+                <ProdtRightCont allFilteredItems={finalResults || []} />
               </div>
             </div>
           </div>

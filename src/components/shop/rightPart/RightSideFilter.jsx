@@ -1,7 +1,34 @@
 import { allIcons } from "@/helpers/IconProvider";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-const RightSideFilter = () => {
+const RightSideFilter = ({ onSearch }) => {
+  const sortOptions = [
+    { label: "Most Popular", value: "popular" },
+    { label: "Price: Low to High", value: "price-asc" },
+    { label: "Price: High to Low", value: "price-desc" },
+    // { label: "Avg. Customer Review", value: "rating" },
+    // { label: "Newest Arrivals", value: "newest" },
+    // { label: "Best Sellers", value: "bestseller" },
+  ];
+
+  const [value, setValue] = useState("");
+
+  const handleChange = (e) => {
+    setValue(e.target.value);
+  };
+  // clicked event
+  const handleClicked = () => {
+    onSearch(value.trim());
+    setValue("");
+  };
+  // clicked inter button
+  const handleKeyPress = (e) => {
+    if (e.code === "Enter") {
+      onSearch(value.trim());
+      setValue("");
+    }
+  };
+  // for icon
   const { searchIcon } = allIcons;
   return (
     <div className="flex justify-between items-center">
@@ -15,26 +42,28 @@ const RightSideFilter = () => {
           id="search"
           placeholder="Search for anything..."
           name="search"
+          onChange={handleChange}
+          value={value}
+          onKeyDown={handleKeyPress}
         />
-        <span className="text-[30px]" id="search">
+        <span
+          className="text-[30px] cursor-pointer "
+          onClick={handleClicked}
+          id="search"
+        >
           {searchIcon}
         </span>
       </label>
       <div className="flex items-center gap-x-2">
         <p className="sm_400 text-gray_900"> Sort by:</p>
         <select className="border-gray_100 text-gray_700 ">
-          <option value="" className="sm_400 text-gray_700">
-            Most Popular
-          </option>
-          <option value="" className="sm_400 text-gray_700">
-            Most Popular
-          </option>
-          <option value="" className="sm_400 text-gray_700">
-            Most Popular
-          </option>
-          <option value="" className="sm_400 text-gray_700">
-            Most Popular
-          </option>
+          {sortOptions.map((items, index) => {
+            return (
+              <option value="" className="sm_400 text-gray_700" key={index}>
+                {items.label}
+              </option>
+            );
+          })}
         </select>
       </div>
     </div>

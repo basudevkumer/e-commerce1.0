@@ -6,6 +6,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import "swiper/css/autoplay";
 import { Autoplay, Pagination } from "swiper/modules";
 
 const SmallWidget = ({ images = [] }) => {
@@ -16,7 +17,7 @@ const SmallWidget = ({ images = [] }) => {
     progressCircle.current.style.setProperty("--progress", 1 - progress);
     progressContent.current.textContent = `${Math.ceil(time / 1000)}s`;
   };
-  
+
   // Ensure images is an array
   const imageArray = Array.isArray(images) ? images : [];
 
