@@ -4,6 +4,7 @@ import {
   bestDealProduct,
   fetchProductApi,
   singleCategoryProductApi,
+  totalItems,
 } from "@/api/productApiP";
 // imort useQuery
 import { useQuery } from "@tanstack/react-query";
@@ -13,7 +14,6 @@ export function useCategory() {
     queryKey: ["allproduct"],
     queryFn: fetchProductApi,
   });
-  
 }
 // for useSingleCategoryProduct
 export let useSingleCategoryProduct = (singleProductCategoryName) => {
@@ -37,5 +37,12 @@ export let allCategoryList = () => {
   return useQuery({
     queryKey: ["allCategory"],
     queryFn: allCategory,
+  });
+};
+
+export let useTotalItems = () => {
+  return useQuery({
+    queryKey: ["totalProductItems"],
+    queryFn: totalItems,
   });
 };

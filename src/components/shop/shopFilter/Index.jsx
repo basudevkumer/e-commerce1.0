@@ -6,6 +6,7 @@ import {
   allCategoryList,
   useCategory,
   useSingleCategoryProduct,
+  useTotalItems,
 } from "@/hooks/useCategory";
 import ProductCard from "@/components/commonComponent/commonProductCard/ProductCard";
 import PriceRangeSlider from "../leftPart/PriceRangeSlider";
@@ -27,6 +28,8 @@ const ShopProductFilter = () => {
   const [pTags, setPTags] = useState("");
   // for searching
   const [search, setSearch] = useState("");
+  // for sorting
+  const [sortBy, setSortBy] = useState("");
 
   // all category Product name list
   const {
@@ -48,22 +51,42 @@ const ShopProductFilter = () => {
     data: productData,
     isPending: productPending,
     isError: productError,
-  } = useCategory();
+  } = useTotalItems();
 
   // mainDataSource
-  const mainDataSource = useMemo(() => {
-    const mainDataContainer = selectedData ? singleCategoryProd : productData;
+  const mainDataSource = useMemo(() =>   {
+    if (selectedData && !search.trim()) {
+      return Array.isArray(singleCategoryProd) ? singleCategoryProd : [];
+    }
 
-    return mainDataContainer;
-  }, [selectedData, singleCategoryProd, productData]);
+    return Array.isArray(productData) ? productData : [];
+  }, [selectedData, singleCategoryProd, productData, search]);
+
+  const searchFilteredData = useMemo(() => {
+    if (!search.trim()) return mainDataSource;
+
+    const searchKeyword = search?.toLowerCase().split(" ").filter(Boolean);
+
+    return mainDataSource?.filter((product) => {
+      const searchAbleText = `
+            ${product?.title || ""}
+            ${product?.description || ""}
+            ${product?.category || ""}
+            ${product?.brand || ""}
+            ${product?.tags?.flatMap((items) => items)?.join(" ") || ""}
+         `.toLowerCase();
+
+      return searchKeyword.every((items) => searchAbleText.includes(items));
+    });
+  }, [search, mainDataSource]);
 
   // filter price
   const filterPrice = useMemo(() => {
-    const catchPriceData = mainDataSource?.filter(
+    const catchPriceData = searchFilteredData?.filter(
       (prodct) => prodct.price >= priceRange[0] && prodct.price <= priceRange[1]
     );
     return catchPriceData;
-  }, [mainDataSource, priceRange]);
+  }, [searchFilteredData, priceRange]);
 
   //available brand
   const availableBrand = useMemo(() => {
@@ -98,24 +121,22 @@ const ShopProductFilter = () => {
         tagItems.tags?.includes(pTags)
       );
     }
-    if (search?.trim() !== "") {
-      const searchKeyword = search?.toLowerCase().split(" ").filter(Boolean);
 
-      catchFinalValue = catchFinalValue?.filter((product) => {
-        const searchAbleText = `
-            ${product?.title || ""}
-            ${product?.description || ""}
-            ${product?.category || ""}
-            ${product?.brand || ""}
-            ${product?.tags?.flatMap((items) => items)?.join(" ") || ""}
-         `.toLowerCase();
+    if (sortBy === "price-asc") {
+      catchFinalValue = [...catchFinalValue].sort((a, b) => a.price - b.price);
+    }
 
-        return searchKeyword.every((items) => searchAbleText.includes(items));
-      });
+    if (sortBy === "price-desc") {
+      catchFinalValue = [...catchFinalValue].sort((a, b) => b.price - a.price);
+    }
+    if (sortBy === "popular") {
+      catchFinalValue = [...catchFinalValue].sort(
+        (a, b) => b.rating - a.rating
+      );
     }
 
     return catchFinalValue;
-  }, [filterPrice, brand, pTags, search]);
+  }, [filterPrice, brand, pTags, sortBy]);
 
   // manage complex UI
   useEffect(() => {
@@ -124,6 +145,7 @@ const ShopProductFilter = () => {
     setPTags("");
     setPricePresetRange([0, 0]);
     setSearch("");
+    setSortBy("");
   }, [selectedData]);
 
   //tag value reset || clear when brand clicked
@@ -150,6 +172,17 @@ const ShopProductFilter = () => {
   useEffect(() => {
     setPricePresetRange([0, 0]);
   }, [priceRange]);
+
+
+
+  // reset tag and brand
+  useEffect(() => {
+    if (search.trim()) {
+      setBrand([]);
+      setPTags("");
+    }
+  }, [search]);
+
   return (
     <div>
       <div>
@@ -166,6 +199,7 @@ const ShopProductFilter = () => {
                   categoryError={categoryError}
                   setCategoryValue={setSelectedData}
                   productData={productData}
+                  selectedValue={selectedData}
                 />
               </div>
 
@@ -201,7 +235,11 @@ const ShopProductFilter = () => {
             </div>
             <div className="col-span-4">
               <div>
-                <RightSideFilter onSearch={setSearch} />
+                <RightSideFilter
+                  onSearch={setSearch}
+                  onSort={setSortBy}
+                  sortValue={sortBy}
+                />
               </div>
               <div className="pt-4 pb-6"></div>
 

@@ -1,8 +1,9 @@
 import { allIcons } from "@/helpers/IconProvider";
 import React, { useEffect, useState } from "react";
 
-const RightSideFilter = ({ onSearch }) => {
+const RightSideFilter = ({ onSearch, onSort, sortValue }) => {
   const sortOptions = [
+    { label: "Select Shorting", value: "" },
     { label: "Most Popular", value: "popular" },
     { label: "Price: Low to High", value: "price-asc" },
     { label: "Price: High to Low", value: "price-desc" },
@@ -10,7 +11,7 @@ const RightSideFilter = ({ onSearch }) => {
     // { label: "Newest Arrivals", value: "newest" },
     // { label: "Best Sellers", value: "bestseller" },
   ];
-
+  // state managment
   const [value, setValue] = useState("");
 
   const handleChange = (e) => {
@@ -28,6 +29,11 @@ const RightSideFilter = ({ onSearch }) => {
       setValue("");
     }
   };
+  // handleShort
+  const handleSort = (e) => {
+    onSort(e.target.value);
+  };
+
   // for icon
   const { searchIcon } = allIcons;
   return (
@@ -56,10 +62,19 @@ const RightSideFilter = ({ onSearch }) => {
       </label>
       <div className="flex items-center gap-x-2">
         <p className="sm_400 text-gray_900"> Sort by:</p>
-        <select className="border-gray_100 text-gray_700 ">
+        <select
+          className="border-gray_100 text-gray_700 "
+          onChange={handleSort}
+          value={sortValue}
+        >
+          {/* <option value="">Select Shorting</option> */}
           {sortOptions.map((items, index) => {
             return (
-              <option value="" className="sm_400 text-gray_700" key={index}>
+              <option
+                value={items.value}
+                className="sm_400 text-gray_700"
+                key={index}
+              >
                 {items.label}
               </option>
             );

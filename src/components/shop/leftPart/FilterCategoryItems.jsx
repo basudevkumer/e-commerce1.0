@@ -1,5 +1,4 @@
 import React from "react";
-import { data } from "react-router-dom";
 import { Virtuoso } from "react-virtuoso";
 
 const FilterCategoryItems = ({
@@ -7,36 +6,45 @@ const FilterCategoryItems = ({
   categoryPending,
   categoryError,
   setCategoryValue,
-  productData
+  selectedValue,
 }) => {
   if (categoryPending) {
     return <div>Loading...</div>;
   }
-  //  handleItemsClick fn
 
-  let handleItemsClick = (itemsValue) => {
-     setCategoryValue(itemsValue)
+  const handleItemsClick = (slug) => {
+    //  toggle logic
+    if (selectedValue === slug) {
+      setCategoryValue(null); 
+    } else {
+      setCategoryValue(slug); 
+    }
   };
 
   return (
     <Virtuoso
       style={{ height: "400px" }}
-      totalCount={categoryData.length}
       data={categoryData}
       itemContent={(index, items) => {
+        const isActive = selectedValue === items.slug;
+
         return (
-          <div className="flex items-center gap-x-2 py-2 px-[6px]   ">
+          <div
+            onClick={() => handleItemsClick(items.slug)}
+            className={`
+              flex items-center gap-x-2 py-2 px-[8px] rounded-md cursor-pointer
+              ${isActive ? "bg-gray-200 text-gray-900" : "hover:bg-gray-100"}
+            `}
+          >
+            {/* controlled radio */}
             <input
               type="radio"
-              id={items.name}
-              name="category"
-              className="cursor-pointer "
-              onChange={() => handleItemsClick(items.slug)}
+              checked={isActive}
+              readOnly
+              className="cursor-pointer"
             />
-            <label
-              htmlFor={items.name}
-              className="cursor-pointer sm_400 text-gray_700 hover:text-gray_900 duration-300"
-            >
+
+            <label className="cursor-pointer sm_400 text-gray_700">
               {items.name}
             </label>
           </div>

@@ -2,7 +2,7 @@ import { instance } from "./axios";
 // get all product
 export async function fetchProductApi() {
   try {
-    const respons = await instance.get("products");
+    const respons = await instance.get("/products");
     return respons.data.products;
   } catch (error) {
     console.error("Fetch Error is :" + error);
@@ -48,3 +48,16 @@ export let allCategory = async () => {
     throw error;
   }
 };
+
+// get total (194) api data
+
+export let totalItems = async () => {
+  try {
+    let totalProductITems = await instance.get("/products?limit=194");
+    return totalProductITems.data.products
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
