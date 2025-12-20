@@ -15,6 +15,8 @@ import PopularTags from "../leftPart/PopularTags";
 import PriceRangePresets from "../leftPart/PriceRangePresets";
 import RightSideFilter from "../rightPart/RightSideFilter";
 import ProdtRightCont from "../rightPart/ProdtRightCont";
+
+
 const ShopProductFilter = () => {
   // state manage
   // price ranger preset and slider
@@ -54,7 +56,7 @@ const ShopProductFilter = () => {
   } = useTotalItems();
 
   // mainDataSource
-  const mainDataSource = useMemo(() =>   {
+  const mainDataSource = useMemo(() => {
     if (selectedData && !search.trim()) {
       return Array.isArray(singleCategoryProd) ? singleCategoryProd : [];
     }
@@ -173,8 +175,6 @@ const ShopProductFilter = () => {
     setPricePresetRange([0, 0]);
   }, [priceRange]);
 
-
-
   // reset tag and brand
   useEffect(() => {
     if (search.trim()) {
@@ -183,11 +183,14 @@ const ShopProductFilter = () => {
     }
   }, [search]);
 
+
+
   return (
     <div>
       <div>
         <BreadCrumb />
       </div>
+      
       <div>
         <Container>
           <div className="pt-[40px] pb-[72px] grid grid-cols-5 gap-x-6">

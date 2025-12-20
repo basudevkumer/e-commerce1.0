@@ -3,6 +3,7 @@ import {
   allCategory,
   bestDealProduct,
   fetchProductApi,
+  individualProduct,
   singleCategoryProductApi,
   totalItems,
 } from "@/api/productApiP";
@@ -44,5 +45,15 @@ export let useTotalItems = () => {
   return useQuery({
     queryKey: ["totalProductItems"],
     queryFn: totalItems,
+  });
+};
+
+// get single individual product
+
+export let useGetSingleProduct = (id) => {
+  return useQuery({
+    queryKey: ["singleProduct", id],
+    queryFn: () => individualProduct(id),
+    enabled: !!id,
   });
 };

@@ -1,10 +1,14 @@
 import React from "react";
 import Star from "@/components/commonComponent/commonStar/Star";
-//import from iconProvider
+import { allIcons } from "@/helpers/IconProvider";
+import { Link } from "react-router-dom";
 
 const ProductCard = ({ product }) => {
+  //import from iconProvider
+  const { productInfoActivites } = allIcons;
+
   return (
-    <div className="border border-gray_100  relative p-4 rounded cursor-pointer w-full  h-[320px] shadow-xl hover:-translate-y-[8px] transition duration-500 ease-in-out">
+    <div className="border border-gray_100  relative p-4 rounded  w-full  h-[320px] shadow-xl hover:-translate-y-[8px] transition duration-500 ease-in-out group">
       {/* tag or batch */}
       <span
         className={`absolute left-3 top-3 py-[5px] px-[10px] bg-danger_500 tiny_600 text-gray_00 rounded z-20`}
@@ -12,14 +16,23 @@ const ProductCard = ({ product }) => {
         TAG
       </span>
       {/* product images */}
-      <picture>
+      <figure className="relative !overflow-hidden">
         <img
           src={product.thumbnail}
           alt={product.title}
-          className="w-full h-[175px] bg-no-repeat bg-center object-cover flex justify-center"
+          className="w-full h-[200px] bg-no-repeat bg-center object-cover flex justify-center "
         />
-      </picture>
-      <div className="pt-6  ">
+        <div className="bg-[#00000034] flex justify-center items-center gap-4 absolute w-full h-full left-0 top-[100%] group-hover:top-0  duration-700 ease-in-out ">
+          {productInfoActivites.map((items, index) => {
+            return (
+              <span className="text-xl bg-gray_00 p-3 h-fit  rounded-full hover:bg-primary_500 cursor-pointer hover:text-gray_00 transition duration-300 ease-in-out" key={index}>
+                <Link to={typeof items.to === "function" ? items.to(product.id) : items.to}>{items.icon}</Link>
+              </span>
+            );
+          })}
+        </div>
+      </figure>
+      <div className="pt-6 ">
         <div className="flex items-center   gap-x-1">
           {/* rating star */}
           <div className="flex gap-x-1">

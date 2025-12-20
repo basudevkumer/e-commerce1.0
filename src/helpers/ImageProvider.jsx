@@ -14,6 +14,7 @@ import MacAppStoreBannar from "@images/appleBannar.png";
 import GoogleAppStoreBannar from "@images/googleBannar.png";
 import GoogleAd from "@images/googleAd.png";
 import XiamiAd from "@images/xiamiAd.png";
+import productDetailPyment from "@images/paymen_ method.png"
 
 export const allImages = {
   logo: Logo,
@@ -40,5 +41,5 @@ export const allImages = {
     { id: 1, src: GoogleAd },
     { id: 2, src: XiamiAd },
   ],
-
+  pymentCardImage: productDetailPyment
 };

@@ -54,10 +54,23 @@ export let allCategory = async () => {
 export let totalItems = async () => {
   try {
     let totalProductITems = await instance.get("/products?limit=194");
-    return totalProductITems.data.products
+    return totalProductITems.data.products;
   } catch (error) {
     console.log(error);
     throw error;
   }
 };
+
+// get single individual product
+
+export let individualProduct = async (id) => {
+  try {
+    const respons = await instance.get(`/products/${id}`);
+    return respons.data;
+  } catch (error) {
+    console.error("Fetch Error is :" + error);
+    throw error;
+  }
+};
+
 

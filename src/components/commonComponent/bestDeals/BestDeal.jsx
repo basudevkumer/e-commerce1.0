@@ -1,4 +1,4 @@
-import SkeletonBestDealCard from "@/components/Skeleton/SkeletonBestDealCard";
+import SkeletonBestDealCard from "@/components/Skeleton/skeletonBestDealCard/SkeletonBestDealCard";
 import React from "react";
 
 const BestDeal = ({ productList, title, isPending }) => {

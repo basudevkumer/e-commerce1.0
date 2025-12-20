@@ -24,7 +24,16 @@ import { IoStarOutline } from "react-icons/io5";
 import { IoHomeOutline } from "react-icons/io5";
 import { FaGreaterThan } from "react-icons/fa6";
 import { IoSearchOutline } from "react-icons/io5";
-
+import { FaEye } from "react-icons/fa";
+import { FaCodeCompare } from "react-icons/fa6";
+import { FaRegWindowRestore } from "react-icons/fa";
+import {
+  RiShieldCheckLine,
+  RiTruckLine,
+  RiMoneyDollarCircleLine,
+  RiCustomerService2Line,
+  RiSecurePaymentLine,
+} from "react-icons/ri";
 
 export const allIcons = {
   rightArrow: <FaArrowRightLong />,
@@ -38,7 +47,7 @@ export const allIcons = {
   ],
   searchIcon: <FiSearch />,
   navMiddleIcon: [
-    { id: 1, icon: <MdOutlineShoppingCart />, to: "/cart" },
+    { id: 1, icon: <MdOutlineShoppingCart />, to: "/shopCart" },
     { id: 2, icon: <FaRegHeart />, to: "/wishlist" },
     { id: 3, icon: <AiOutlineUser />, to: "/account" },
   ],
@@ -67,6 +76,45 @@ export const allIcons = {
   ],
   homeIcon: <IoHomeOutline />,
   greaterThan: <FaGreaterThan />,
-  searchIcon: <IoSearchOutline/>
+  searchIcon: <IoSearchOutline />,
 
+  productInfoActivites: [
+    { id: 1, icon: <MdOutlineShoppingCart />, to: "/shopCart" },
+    { id: 2, icon: <FaRegHeart />, to: "/wishlist" },
+    { id: 3, icon: <FaEye />, to: (id) => `/product-details/${id}` },
+  ],
+  compareIcon: <FaCodeCompare />,
+  detailPageIcon: [
+    { id: 1, icon: <FaRegWindowRestore /> },
+    { id: 2, icon: <FaFacebook /> },
+    { id: 3, icon: <FaTwitter /> },
+    { id: 4, icon: <FaPinterestP /> },
+  ],
+  productFeatures: [
+    {
+      id: 1,
+      icon: <RiShieldCheckLine />,
+      title: "Free 1 Year Warranty",
+    },
+    {
+      id: 2,
+      icon: <RiTruckLine />,
+      title: "Free Shipping & Fasted Delivery",
+    },
+    {
+      id: 3,
+      icon: <RiMoneyDollarCircleLine />,
+      title: "100% Money-back guarantee",
+    },
+    {
+      id: 4,
+      icon: <RiCustomerService2Line />,
+      title: "24/7 Customer support",
+    },
+    {
+      id: 5,
+      icon: <RiSecurePaymentLine />,
+      title: "Secure payment method",
+    },
+  ],
 };

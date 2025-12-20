@@ -15,9 +15,9 @@ const FilterCategoryItems = ({
   const handleItemsClick = (slug) => {
     //  toggle logic
     if (selectedValue === slug) {
-      setCategoryValue(null); 
+      setCategoryValue(null);
     } else {
-      setCategoryValue(slug); 
+      setCategoryValue(slug);
     }
   };
 
