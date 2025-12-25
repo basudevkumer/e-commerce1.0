@@ -27,6 +27,8 @@ import { IoSearchOutline } from "react-icons/io5";
 import { FaEye } from "react-icons/fa";
 import { FaCodeCompare } from "react-icons/fa6";
 import { FaRegWindowRestore } from "react-icons/fa";
+import { FaApple } from "react-icons/fa";
+
 import {
   RiShieldCheckLine,
   RiTruckLine,
@@ -117,4 +119,5 @@ export const allIcons = {
       title: "Secure payment method",
     },
   ],
+  appleIcon: <FaApple />,
 };

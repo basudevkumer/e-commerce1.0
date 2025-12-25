@@ -15,6 +15,7 @@ import PopularTags from "../leftPart/PopularTags";
 import PriceRangePresets from "../leftPart/PriceRangePresets";
 import RightSideFilter from "../rightPart/RightSideFilter";
 import ProdtRightCont from "../rightPart/ProdtRightCont";
+import BestDealProdtBannar from "@/components/commonComponent/bestDeal2/BestDealProdtBannar";
 
 
 const ShopProductFilter = () => {
@@ -234,6 +235,9 @@ const ShopProductFilter = () => {
                   onClicked={setPTags}
                   activeTag={pTags}
                 />
+              </div>
+              <div className="mt-7">
+                <BestDealProdtBannar/>
               </div>
             </div>
             <div className="col-span-4">

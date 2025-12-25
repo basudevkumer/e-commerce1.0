@@ -6,14 +6,14 @@ const ProdtRightCont = ({ allFilteredItems = [] }) => {
   const parentRef = React.useRef(null);
 
   const rowVirtualizer = useVirtualizer({
-    count: Math.ceil(allFilteredItems.length / 4),   // 4 column grid support
+    count: Math.ceil(allFilteredItems.length / 4),
     getScrollElement: () => parentRef.current,
-    estimateSize: () => 350, 
+    estimateSize: () => 350,
   });
 
   return (
     <div>
-      <div ref={parentRef} style={{ height: "1200px", overflowY: "auto" }}>
+      <div ref={parentRef} style={{ height: "2400px", overflowY: "auto" }}>
         <div
           style={{
             height: `${rowVirtualizer.getTotalSize()}px`,
