@@ -38,7 +38,7 @@ const BestDealProdtBannar = () => {
         </span>{" "}
       </p>
       <div className="pt-6 flex flex-col gap-y-3">
-        <button className="flex items-center gap-2 text-gray_00 t  bg-primary_500 w-full py-[14px] rounded justify-center">
+        <button className="flex items-center gap-2 text-gray_00 t  bg-primary_500 w-full py-[14px] rounded justify-center cursor-pointer">
           <span className=""> {productInfoActivites[0].icon}</span> Add to Cart
         </button>
         <Button

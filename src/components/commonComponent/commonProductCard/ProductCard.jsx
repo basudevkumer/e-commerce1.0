@@ -25,9 +25,18 @@ const ProductCard = ({ product }) => {
         <div className="bg-[#00000034] flex justify-center items-center gap-4 absolute w-full h-full left-0 top-[100%] group-hover:top-0  duration-700 ease-in-out ">
           {productInfoActivites.map((items, index) => {
             return (
-              <span className="text-xl bg-gray_00 p-3 h-fit  rounded-full hover:bg-primary_500 cursor-pointer hover:text-gray_00 transition duration-300 ease-in-out" key={index}>
-                <Link to={typeof items.to === "function" ? items.to(product.id) : items.to}>{items.icon}</Link>
-              </span>
+              <Link
+                to={
+                  typeof items.to === "function"
+                    ? items.to(product.id)
+                    : items.to
+                }
+                className="text-xl bg-gray_00 p-3 h-fit  rounded-full hover:bg-primary_500 cursor-pointer hover:text-gray_00 transition duration-300 ease-in-out"
+                key={index}
+              
+              >
+                {items.icon}
+              </Link>
             );
           })}
         </div>

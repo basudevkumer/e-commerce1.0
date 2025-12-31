@@ -4,30 +4,62 @@ import { allIcons } from "@/helpers/IconProvider";
 import { allImages } from "@/helpers/ImageProvider";
 import { useGetSingleProduct } from "@/hooks/useCategory";
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Ceracell from "../detailCeracell/Ceracell";
 import MoreDetails from "../moreDetailProduct/MoreDetails";
 import BreadCrumb from "@/components/commonComponent/breadcrumb/BreadCrumb";
+import { useDispatch, useSelector } from "react-redux";
+import { addTocard, updateQuanty } from "@/reduxFeature/slices/shopSlice";
+import { current } from "@reduxjs/toolkit";
 
 const ProductDetails = () => {
+  const dispatch = useDispatch();
+
+  const cardItems = useSelector((state) => state.addCard.value);
+
   //  here catch id
   const { id } = useParams();
   // here catch api data
   const { data, isPending, isError } = useGetSingleProduct(id);
+
+  const haveCardItems = cardItems.find((items) => items.id === data?.id);
+
+  const currentItems = haveCardItems ? haveCardItems.quantity : 0;
+
+  //ispending
+  if (isPending) {
+    return <div>Loading........</div>;
+  }
+
   // get icon
   const { productInfoActivites, compareIcon, detailPageIcon } = allIcons;
   // get images
   const { pymentCardImage } = allImages;
-  //ispending
-  if (isPending) {
-    <div>Loading........</div>;
-  }
 
-  // const discountPrice =
-  //   data?.price * (data?.discountPercentage / 100).toFixed(2);
-  // const parcentage = Math.round(data?.discountPercentage);
-  // const originalPrice = data?.price;
+  const handleClicked = () => {
+    dispatch(
+      addTocard({
+        ...data,
+        quantity: 1,
+      })
+    );
+  };
 
+  const handleIncrement = (id) => {
+    if (!haveCardItems) {
+      dispatch(
+        addTocard({
+          ...data,
+          quantity: 1,
+        })
+      );
+    } else {
+      dispatch(updateQuanty({ id, type: "increment" }));
+    }
+  };
+  const handleDecrement = (id) => {
+    dispatch(updateQuanty({ id, type: "decrement" }));
+  };
   return (
     <div>
       <BreadCrumb />
@@ -122,20 +154,33 @@ const ProductDetails = () => {
                 </div>
                 <div className="flex gap-x-4 py-6">
                   <div className="flex gap-x-[37px] border-[2px] border-gray_100  px-5 items-center">
-                    <button className="text-[30px]  text-gray_900 cursor-pointer">
+                    <button
+                      className="text-[30px]  text-gray_900 cursor-pointer"
+                      onClick={() => handleDecrement(data.id)}
+                    >
                       -
                     </button>
-                    <p className="text-sm font-medium text-gray_700"> 01</p>
-                    <button className="text-[25px]  text-gray_900 cursor-pointer">
+                    <p className="text-sm font-medium text-gray_700">
+                      {currentItems > 0 ? currentItems : 1}
+                    </p>
+                    <button
+                      className="text-[25px]  text-gray_900 cursor-pointer"
+                      onClick={() => handleIncrement(data.id)}
+                    >
                       +
                     </button>
                   </div>
-                  <button className=" px-[81px] bg-primary_500 whitespace-nowrap heading6 text-gray_00 flex items-center gap-x-3 cursor-pointer">
-                    Add to card{" "}
-                    <span className="text-lg">
-                      {productInfoActivites[0].icon}
-                    </span>
-                  </button>
+                  <Link to={"/shopping-card"}>
+                    <button
+                      className=" px-[81px] bg-primary_500 whitespace-nowrap heading6 text-gray_00 flex items-center gap-x-3 cursor-pointer"
+                      onClick={handleClicked}
+                    >
+                      Add to card
+                      <span className="text-lg">
+                        {productInfoActivites[0].icon}
+                      </span>
+                    </button>
+                  </Link>
                   <button className="uppercase whitespace-nowrap  heading6 border-[2px] border-primary_500 text-primary_500 rounded px-8 cursor-pointer">
                     {" "}
                     Buy now
