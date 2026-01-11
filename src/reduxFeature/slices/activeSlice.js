@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-
 const loadItemsFromLocalStorage = () => {
   try {
     const data = localStorage.getItem("activeItems");
-    return data.length >= 0 ? JSON.parse(data) : "";
+    if (!data) return [];
+    return JSON.parse(data);
   } catch (error) {
     console.log(error);
-    return "";
+    return [];
   }
 };
 
