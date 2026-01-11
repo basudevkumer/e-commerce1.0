@@ -3,11 +3,13 @@ import shoppingReducer from "./slices/shopSlice";
 import subTotalReducer from "./slices/subtotalSlice";
 import discountReducer from "./slices/discountSlice";
 import taxReducer from "./slices/taxSlice";
+import activeReducer from "./slices/activeSlice";
 export const store = configureStore({
   reducer: {
     addCard: shoppingReducer,
     subTotal: subTotalReducer,
     totalDiscount: discountReducer,
     allTax: taxReducer,
+    activeItems: activeReducer,
   },
 });

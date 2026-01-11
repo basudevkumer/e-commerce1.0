@@ -13,10 +13,10 @@ import PriceRangeSlider from "../leftPart/PriceRangeSlider";
 import ShopCheckBox from "../leftPart/ShopCheckBox";
 import PopularTags from "../leftPart/PopularTags";
 import PriceRangePresets from "../leftPart/PriceRangePresets";
-import RightSideFilter from "../rightPart/RightSideFilter";
+import RightSideFilter from "../rightPart/RightSearchFilter";
 import ProdtRightCont from "../rightPart/ProdtRightCont";
 import BestDealProdtBannar from "@/components/commonComponent/bestDeal2/BestDealProdtBannar";
-
+import RightActiveFilter from "../rightPart/RightActiveFilter";
 
 const ShopProductFilter = () => {
   // state manage
@@ -33,6 +33,8 @@ const ShopProductFilter = () => {
   const [search, setSearch] = useState("");
   // for sorting
   const [sortBy, setSortBy] = useState("");
+  // active value
+  const [catchActiveValue, setCatchActiveValue] = useState("");
 
   // all category Product name list
   const {
@@ -184,14 +186,12 @@ const ShopProductFilter = () => {
     }
   }, [search]);
 
-
-
   return (
     <div>
       <div>
         <BreadCrumb />
       </div>
-      
+
       <div>
         <Container>
           <div className="pt-[40px] pb-[72px] grid grid-cols-5 gap-x-6">
@@ -204,6 +204,7 @@ const ShopProductFilter = () => {
                   setCategoryValue={setSelectedData}
                   productData={productData}
                   selectedValue={selectedData}
+                  activeFilterValue={setCatchActiveValue}
                 />
               </div>
 
@@ -237,7 +238,7 @@ const ShopProductFilter = () => {
                 />
               </div>
               <div className="mt-7">
-                <BestDealProdtBannar/>
+                <BestDealProdtBannar />
               </div>
             </div>
             <div className="col-span-4">
@@ -248,9 +249,15 @@ const ShopProductFilter = () => {
                   sortValue={sortBy}
                 />
               </div>
-              <div className="pt-4 pb-6"></div>
+              <div className="pt-4">
+                <RightActiveFilter
+                  activeValue={catchActiveValue}
+                  countfilteredProduct={finalResults || []}
+                  searchItems={search}
+                />
+              </div>
 
-              <div className=" ">
+              <div className="pt-8 pb-6">
                 <ProdtRightCont allFilteredItems={finalResults || []} />
               </div>
             </div>

@@ -72,5 +72,3 @@ export let individualProduct = async (id) => {
     throw error;
   }
 };
-
-

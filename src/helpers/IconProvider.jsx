@@ -29,6 +29,7 @@ import { FaCodeCompare } from "react-icons/fa6";
 import { FaRegWindowRestore } from "react-icons/fa";
 import { FaApple } from "react-icons/fa";
 import { IoMdCloseCircleOutline } from "react-icons/io";
+import { IoClose } from "react-icons/io5";
 
 import {
   RiShieldCheckLine,
@@ -121,5 +122,6 @@ export const allIcons = {
     },
   ],
   appleIcon: <FaApple />,
-  close: <IoMdCloseCircleOutline/>
+  close: <IoMdCloseCircleOutline />,
+  plainClose: <IoClose />,
 };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Virtuoso } from "react-virtuoso";
 
 const FilterCategoryItems = ({
@@ -7,10 +7,17 @@ const FilterCategoryItems = ({
   categoryError,
   setCategoryValue,
   selectedValue,
+  activeFilterValue,
 }) => {
   if (categoryPending) {
     return <div>Loading...</div>;
   }
+  // for active filter
+  const [activeFilter, setActiveFilter] = useState("");
+
+  useEffect(() => {
+    activeFilterValue(activeFilter);
+  }, [activeFilter]);
 
   const handleItemsClick = (slug) => {
     //  toggle logic
@@ -19,6 +26,8 @@ const FilterCategoryItems = ({
     } else {
       setCategoryValue(slug);
     }
+
+    setActiveFilter(slug);
   };
 
   return (
