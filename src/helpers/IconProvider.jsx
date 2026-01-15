@@ -30,6 +30,9 @@ import { FaRegWindowRestore } from "react-icons/fa";
 import { FaApple } from "react-icons/fa";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
+import { FaChevronDown } from "react-icons/fa6";
+import { FaChevronUp } from "react-icons/fa6";
+import { FaChevronRight } from "react-icons/fa6";
 
 import {
   RiShieldCheckLine,
@@ -51,9 +54,14 @@ export const allIcons = {
   ],
   searchIcon: <FiSearch />,
   navMiddleIcon: [
-    { id: 1, icon: <MdOutlineShoppingCart />, to: "/shopCart" },
-    { id: 2, icon: <FaRegHeart />, to: "/wishlist" },
-    { id: 3, icon: <AiOutlineUser />, to: "/account" },
+    {
+      id: 1,
+      icon: <MdOutlineShoppingCart />,
+      to: "/shopCart",
+      itemName: "shopCart",
+    },
+    { id: 2, icon: <FaRegHeart />, to: "/wishlist", itemName: "wishlist" },
+    { id: 3, icon: <AiOutlineUser />, to: "/account", itemName: "account" },
   ],
   allItemsIcon: [
     { id: 1, icon: <IoLocationOutline /> },
@@ -124,4 +132,9 @@ export const allIcons = {
   appleIcon: <FaApple />,
   close: <IoMdCloseCircleOutline />,
   plainClose: <IoClose />,
+  chevron: [
+    { id: 1, icon: <FaChevronDown /> },
+    { id: 2, icon: <FaChevronUp /> },
+    { id: 3, icon: <FaChevronRight /> },
+  ],
 };

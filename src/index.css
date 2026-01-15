@@ -454,4 +454,8 @@
   transform: rotate(-90deg);
 }
 
-
+[type="email"] {
+  &:focus {
+    --tw-ring-color: var(--gray_100);
+  }
+}

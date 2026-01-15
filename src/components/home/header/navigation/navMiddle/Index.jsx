@@ -1,3 +1,4 @@
+import SignIn from "@/components/account/SignIn";
 import Button from "@/components/commonComponent/commonButton/Button";
 import Container from "@/components/commonComponent/containers/Container";
 import { allIcons } from "@/helpers/IconProvider";
@@ -31,16 +32,29 @@ const NavMiddle = () => {
       setShowIcon(true);
     }
   };
+
+  // manage state
+  const [isAccountOpen, setIsAccountOpen] = useState(null);
+  // handle event
+  const handleAccount = (id) => {
+    setIsAccountOpen((prev) => (prev === id ? null : id));
+  };
+const handleCard = (id)=>{
+
+  console.log(id);
+  
+
+}
   return (
     <div className="bg-secondary_700 py-5 border-t border-[#ffffff41]">
       <Container>
         <div className="grid grid-cols-4  items-center">
           <div className="">
             <picture>
-              <img src={navMiddle} alt="" />
+              <img src={navMiddle} alt="middlenavImage" />
             </picture>
           </div>
-          <div className="col-span-2  flex  justify-center">
+          <div className="col-span-2  flex  justify-center ">
             <div className="relative">
               <input
                 type="search"
@@ -61,27 +75,36 @@ const NavMiddle = () => {
               )}
             </div>
           </div>
-          <div className=" flex  justify-end">
+          <div className=" flex  justify-end ">
             <ul className="flex gap-x-6 ">
               {navMiddleIcon.map((items) => {
-                return items.to === "/cart" ? (
+                const isActive = items.id === isAccountOpen;
+
+                return items.itemName === "shopCart" ? (
                   <div className="relative">
-                    <li
-                      key={items.id}
-                      className="text-gray_00 text-[32px] cursor-pointer "
-                    >
-                      {items.icon}
+                    <li key={items.id} className="" onClick={()=>handleCard(items.id)}>
+                      <span className="text-gray_00 text-[32px] cursor-pointer  bg-red_500">
+                        {items.icon}
+                      </span>
                     </li>
                     <span className="absolute -top-[7px] -right-[3px] text-sm font-semibold text-secondary_700    bg-gray_00 rounded-full  h-5 w-5 flex items-center justify-center cursor-pointer  ">
                       2
                     </span>
                   </div>
                 ) : (
-                  <li
-                    key={items.id}
-                    className="text-gray_00 text-[32px] cursor-pointer"
-                  >
-                    {items.icon}
+                  <li key={items.id} className=" relative">
+                    <span
+                      onClick={() => handleAccount(items.id)}
+                      className="text-gray_00 text-[32px] cursor-pointer"
+                    >
+                      {items.icon}{" "}
+                    </span>
+
+                    {isActive && items.id === 3 && (
+                      <div className="absolute left-[-430px] top-12 w-[460px]   z-60">
+                        <SignIn />
+                      </div>
+                    )}
                   </li>
                 );
               })}
