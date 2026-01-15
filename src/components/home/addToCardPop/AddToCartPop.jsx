@@ -1,15 +1,18 @@
+import Button from "@/components/commonComponent/commonButton/Button";
+import { allIcons } from "@/helpers/IconProvider";
 import React from "react";
 
 const AddToCartPop = () => {
+  const { plainClose } = allIcons;
   return (
-    <div class="max-w-md mx-auto bg-white shadow-md rounded-md p-5">
+    <div class="max-w-md mx-auto bg-gray_00 shadow-md rounded-md px-6 py-4">
       <div class="mb-4">
-        <h2 class="text-lg font-semibold text-gray-800">
-          Shopping Cart <span class="text-gray-500">(02)</span>
+        <h2 class="md_500 text-gray_900 border-b pb-[14px] border-gray_400 ">
+          Shopping Cart <span class="text-gray_600">(02)</span>
         </h2>
       </div>
 
-      <div class="space-y-4">
+      <div class="space-y-4 py-5">
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-4">
             <img
@@ -18,48 +21,32 @@ const AddToCartPop = () => {
               class="w-16 h-16 object-cover rounded-md"
             />
             <div>
-              <p class="text-gray-800 font-medium">
+              <p class="sm_400 text-gray_900">
                 Canon EOS 1500D DSLR Camera Body+ 18-55 mm
               </p>
-              <p class="text-gray-500 text-sm">
-                1 x <span class="text-blue-500 font-semibold">$1,500</span>
+              <p class="text-gray_600 sm_400 pt-1">
+                1 x <span class="text-secondary_500  sm_600">$1,500</span>
               </p>
             </div>
           </div>
-          <button class="text-gray-400 hover:text-red-500">&times;</button>
-        </div>
-
-        <div class="flex items-center justify-between">
-          <div class="flex items-center gap-4">
-            <img
-              src="https://via.placeholder.com/60"
-              alt="Headphones"
-              class="w-16 h-16 object-cover rounded-md"
-            />
-            <div>
-              <p class="text-gray-800 font-medium">
-                Simple Mobile 5G LTE Galaxy 12 Mini 512GB Gaming Phone
-              </p>
-              <p class="text-gray-500 text-sm">
-                2 x <span class="text-blue-500 font-semibold">$269</span>
-              </p>
-            </div>
-          </div>
-          <button class="text-gray-400 hover:text-red-500">&times;</button>
+          <button class="text-gray_400  text-2xl hover:text-danger_500 cursor-pointer">
+            {plainClose}
+          </button>
         </div>
       </div>
 
       <div class="mt-5 border-t border-gray-200 pt-4 flex justify-between items-center">
-        <span class="text-gray-600 font-medium">Sub-Total:</span>
-        <span class="text-gray-800 font-bold text-lg">$2038.00 USD</span>
+        <span class="text-gray-700 sm_400">Sub-Total:</span>
+        <span class="text-gray_900  sm_500">$2038.00 USD</span>
       </div>
 
       <div class="mt-4 space-y-2">
-        <button class="w-full bg-orange-500 text-white py-2 rounded-md hover:bg-orange-600 transition duration-150 font-semibold flex justify-center items-center gap-2">
-          CHECKOUT NOW &rarr;
-        </button>
-        <button class="w-full border border-orange-500 text-orange-500 py-2 rounded-md hover:bg-orange-50 transition duration-150 font-semibold">
-          VIEW CART
+        <Button
+          className={`!text-gray_00  !bg-primary_500 justify-center`}
+          children={"Checkout now"}
+        />
+        <button className="border-2 border-primary_100 text-primary_500 w-full py-[10px] cursor-pointer">
+          View Cart
         </button>
       </div>
     </div>

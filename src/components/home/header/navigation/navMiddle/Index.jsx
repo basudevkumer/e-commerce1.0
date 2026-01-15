@@ -1,6 +1,7 @@
 import SignIn from "@/components/account/SignIn";
 import Button from "@/components/commonComponent/commonButton/Button";
 import Container from "@/components/commonComponent/containers/Container";
+import AddToCartPop from "@/components/home/addToCardPop/AddToCartPop";
 import { allIcons } from "@/helpers/IconProvider";
 import { allImages } from "@/helpers/ImageProvider";
 import React, { useState } from "react";
@@ -13,8 +14,7 @@ const NavMiddle = () => {
   /////////////////////
   //// import icons
   /////////////////////
-  const { searchIcon } = allIcons;
-  const { navMiddleIcon } = allIcons;
+  const { searchIcon, navMiddleIcon } = allIcons;
 
   /**
    * render search input
@@ -35,16 +35,18 @@ const NavMiddle = () => {
 
   // manage state
   const [isAccountOpen, setIsAccountOpen] = useState(null);
+  const [isAddToCardOpen, setIsAddToCardOpen] = useState(null);
+
+  console.log(isAccountOpen);
+
   // handle event
+
   const handleAccount = (id) => {
     setIsAccountOpen((prev) => (prev === id ? null : id));
   };
-const handleCard = (id)=>{
-
-  console.log(id);
-  
-
-}
+  const handleCard = (id) => {
+    setIsAddToCardOpen((prev) => (prev === id ? null : id));
+  };
   return (
     <div className="bg-secondary_700 py-5 border-t border-[#ffffff41]">
       <Container>
@@ -79,15 +81,25 @@ const handleCard = (id)=>{
             <ul className="flex gap-x-6 ">
               {navMiddleIcon.map((items) => {
                 const isActive = items.id === isAccountOpen;
+                // const cartIsActive = items.id === isAddToCardOpen;
 
                 return items.itemName === "shopCart" ? (
                   <div className="relative">
-                    <li key={items.id} className="" onClick={()=>handleCard(items.id)}>
-                      <span className="text-gray_00 text-[32px] cursor-pointer  bg-red_500">
+                    <li key={items.id} className="relative">
+                      <span
+                        className="text-gray_00 text-[32px] cursor-pointer  bg-red_500 z-10"
+                        onClick={() => handleAccount(items.id)}
+                      >
                         {items.icon}
                       </span>
+
+                      {isActive && (
+                        <div className="absolute w-[380px] bg-rose-400 top-12 left-[-355px] z-60">
+                          <AddToCartPop/>
+                        </div>
+                      )}
                     </li>
-                    <span className="absolute -top-[7px] -right-[3px] text-sm font-semibold text-secondary_700    bg-gray_00 rounded-full  h-5 w-5 flex items-center justify-center cursor-pointer  ">
+                    <span className="absolute -top-[9px] -right-[3px] text-sm font-semibold text-secondary_700    bg-gray_00 rounded-full  h-5 w-5 flex items-center justify-center cursor-pointer   z-0 ">
                       2
                     </span>
                   </div>
