@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import WidgetContainer from "@/components/home/header/widgets/widgetContainer/Index";
 import Category from "@/components/home/category/categoryDataFetch/Index";
 import FeatureNav from "@/components/home/feature/Index";
@@ -7,8 +7,23 @@ import FeatureProduct from "@/components/home/featureProduct/Index";
 import Subscribe from "@/components/home/subscribe/Index";
 import HomeProdctAd from "@/components/home/HomeAd/Index";
 import BestDealContainter from "@/components/home/bestDealsContainer/Index";
+import HomePopUp from "@/components/home/homePopUp/HomePopUp";
 
 const Home = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      setIsOpen((prev) => !prev);
+    }, 7000);
+
+    return () => clearTimeout(timerId);
+  }, []);
+
+  const handlePopUp = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
     <>
       <WidgetContainer />
@@ -19,6 +34,8 @@ const Home = () => {
       <HomeProdctAd />
       <BestDealContainter />
       <Subscribe />
+
+      {isOpen && <HomePopUp eventHandle={handlePopUp} />}
     </>
   );
 };
