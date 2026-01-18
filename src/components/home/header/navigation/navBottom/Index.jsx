@@ -3,6 +3,7 @@ import { allIcons } from "@/helpers/IconProvider";
 import { allCategoryList, useTotalItems } from "@/hooks/useCategory";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import React, { useRef, useState } from "react";
+import { Link } from "react-router-dom";
 
 const NavBottom = () => {
   // manage state
@@ -215,10 +216,12 @@ const NavBottom = () => {
               <span className="text-gray_600 ">{allItemsIcon[0].icon}</span>
               <p className="sm_400 text-gray_600"> Track Order</p>
             </div>
-            <div className="py-[14px] px-6 rounded-[2px] hover:bg-gray_50 transition duration-150 ease-in-out cursor-pointer flex items-center gap-x-2.5">
+            <Link to={"/compare"}>
+             <div className="py-[14px] px-6 rounded-[2px] hover:bg-gray_50 transition duration-150 ease-in-out cursor-pointer flex items-center gap-x-2.5 group">
               <span className="text-gray_600 ">{allItemsIcon[1].icon}</span>
               <p className="sm_400 text-gray_600"> Compare</p>
             </div>
+            </Link>
             <div className="py-[14px] px-6 rounded-[2px] hover:bg-gray_50 transition duration-150 ease-in-out cursor-pointer flex items-center gap-x-2.5">
               <span className="text-gray_600 ">{allItemsIcon[2].icon}</span>
               <p className="sm_400 text-gray_600"> Customer Support</p>

@@ -5,8 +5,13 @@ import AddToCartPop from "@/components/home/addToCardPop/AddToCartPop";
 import { allIcons } from "@/helpers/IconProvider";
 import { allImages } from "@/helpers/ImageProvider";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const NavMiddle = () => {
+  
+ 
+
   /////////////////////
   //// import images
   /////////////////////
@@ -37,8 +42,8 @@ const NavMiddle = () => {
   const [isAccountOpen, setIsAccountOpen] = useState(null);
   const [isAddToCardOpen, setIsAddToCardOpen] = useState(null);
 
-  console.log(isAccountOpen);
-
+  //data from add to car
+  const addTocardItems = useSelector(state => state.addCard.value)
   // handle event
 
   const handleAccount = (id) => {
@@ -95,29 +100,31 @@ const NavMiddle = () => {
 
                       {isActive && (
                         <div className="absolute w-[380px] bg-rose-400 top-12 left-[-355px] z-60">
-                          <AddToCartPop/>
+                          <AddToCartPop />
                         </div>
                       )}
                     </li>
                     <span className="absolute -top-[9px] -right-[3px] text-sm font-semibold text-secondary_700    bg-gray_00 rounded-full  h-5 w-5 flex items-center justify-center cursor-pointer   z-0 ">
-                      2
+                      {addTocardItems.length}
                     </span>
                   </div>
                 ) : (
-                  <li key={items.id} className=" relative">
-                    <span
-                      onClick={() => handleAccount(items.id)}
-                      className="text-gray_00 text-[32px] cursor-pointer"
-                    >
-                      {items.icon}{" "}
-                    </span>
+                  <Link to={items.to}>
+                    <li key={items.id} className=" relative">
+                      <span
+                        onClick={() => handleAccount(items.id)}
+                        className="text-gray_00 text-[32px] cursor-pointer"
+                      >
+                        {items.icon}{" "}
+                      </span>
 
-                    {isActive && items.id === 3 && (
-                      <div className="absolute left-[-430px] top-12 w-[460px]   z-60">
-                        <SignIn />
-                      </div>
-                    )}
-                  </li>
+                      {isActive && items.id === 3 && (
+                        <div className="absolute left-[-430px] top-12 w-[460px]   z-60">
+                          <SignIn />
+                        </div>
+                      )}
+                    </li>
+                  </Link>
                 );
               })}
             </ul>

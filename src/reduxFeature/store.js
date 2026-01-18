@@ -4,6 +4,9 @@ import subTotalReducer from "./slices/subtotalSlice";
 import discountReducer from "./slices/discountSlice";
 import taxReducer from "./slices/taxSlice";
 import activeReducer from "./slices/activeSlice";
+import compareReducer from "./slices/compareSlice";
+import whisReducer from "./slices/wishList";
+
 export const store = configureStore({
   reducer: {
     addCard: shoppingReducer,
@@ -11,5 +14,7 @@ export const store = configureStore({
     totalDiscount: discountReducer,
     allTax: taxReducer,
     activeItems: activeReducer,
+    compareItems: compareReducer,
+    wishList: whisReducer,
   },
 });

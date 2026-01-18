@@ -47,7 +47,7 @@ const ShoppingRight = () => {
           </div>
           <div className="flex items-center justify-between">
             <p className="sm_400 text-gray_600">Tax</p>
-            <p className="sm_500 text-gray_900">${totalTax.toFixed(2)}</p>
+            <p className="sm_500 text-gray_900">${totalTax?.toFixed(2)}</p>
           </div>
         </div>
         <div className="w-full border-1 border-gray_100 my-4"></div>

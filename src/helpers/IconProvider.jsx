@@ -61,7 +61,7 @@ export const allIcons = {
       itemName: "shopCart",
     },
     { id: 2, icon: <FaRegHeart />, to: "/wishlist", itemName: "wishlist" },
-    { id: 3, icon: <AiOutlineUser />, to: "/account", itemName: "account" },
+    { id: 3, icon: <AiOutlineUser />, to: "", itemName: "account" },
   ],
   allItemsIcon: [
     { id: 1, icon: <IoLocationOutline /> },

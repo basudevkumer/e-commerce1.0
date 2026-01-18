@@ -11,6 +11,11 @@ import BreadCrumb from "@/components/commonComponent/breadcrumb/BreadCrumb";
 import { useDispatch, useSelector } from "react-redux";
 import { addTocard, updateQuanty } from "@/reduxFeature/slices/shopSlice";
 import { current } from "@reduxjs/toolkit";
+import {
+  compareSlice,
+  storeCompareValue,
+} from "@/reduxFeature/slices/compareSlice";
+import { addWishItems } from "@/reduxFeature/slices/wishList";
 
 const ProductDetails = () => {
   const dispatch = useDispatch();
@@ -41,7 +46,7 @@ const ProductDetails = () => {
       addTocard({
         ...data,
         quantity: 1,
-      })
+      }),
     );
   };
 
@@ -51,7 +56,7 @@ const ProductDetails = () => {
         addTocard({
           ...data,
           quantity: 1,
-        })
+        }),
       );
     } else {
       dispatch(updateQuanty({ id, type: "increment" }));
@@ -59,6 +64,13 @@ const ProductDetails = () => {
   };
   const handleDecrement = (id) => {
     dispatch(updateQuanty({ id, type: "decrement" }));
+  };
+
+  const handleCompare = (items) => {
+    dispatch(storeCompareValue(items));
+  };
+  const handleWishItems = (items) => {
+    dispatch(addWishItems(items));
   };
   return (
     <div>
@@ -193,11 +205,23 @@ const ProductDetails = () => {
                     <span className="text-gray_700 ">
                       {productInfoActivites[1].icon}
                     </span>
-                    <p className="sm_400 text-gray_700 ">Add to Wishlist</p>
+                    <Link to={"/wishlist"}>
+                      <p
+                        className="sm_400 text-gray_700 "
+                        onClick={() => handleWishItems(data)}
+                      >
+                        Add to Wishlist
+                      </p>
+                    </Link>
                   </div>
                   <div className="flex gap-x-[6px] items-center">
                     <span className="text-gray_700 ">{compareIcon}</span>
-                    <p className="sm_400 text-gray_700 ">Add to Compare</p>
+                    <p
+                      className="sm_400 text-gray_700 cursor-pointer "
+                      onClick={() => handleCompare(data)}
+                    >
+                      <Link to={"/compare"}>Add to Compare</Link>
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-center gap-x-3">

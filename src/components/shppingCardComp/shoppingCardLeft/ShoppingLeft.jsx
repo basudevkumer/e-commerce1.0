@@ -21,7 +21,7 @@ const ShoppingLeft = () => {
     dispatch(updateQuanty({ id, type: "decrement" }));
   };
 
-  const hangleRemove = (id) => {
+  const handleRemove = (id) => {
     dispatch(removeCard({ id }));
   };
   const { close, arrowIcon } = allIcons;
@@ -54,7 +54,7 @@ const ShoppingLeft = () => {
               <div className="col-span-3  flex items-center gap-x-3">
                 <span
                   className="text-gray_400 text-2xl hover:text-danger_500  ransition duration-300 ease-in-out"
-                  onClick={() => hangleRemove(items.id)}
+                  onClick={() => handleRemove(items.id)}
                 >
                   {close}
                 </span>
