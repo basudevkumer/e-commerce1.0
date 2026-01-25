@@ -91,7 +91,7 @@ export const allIcons = {
   searchIcon: <IoSearchOutline />,
 
   productInfoActivites: [
-    { id: 1, icon: <MdOutlineShoppingCart />, to: "/shopCart" },
+    { id: 1, icon: <MdOutlineShoppingCart />, to: "/shopping-card" },
     { id: 2, icon: <FaRegHeart />, to: "/wishlist" },
     { id: 3, icon: <FaEye />, to: (id) => `/product-details/${id}` },
   ],
