@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Virtuoso } from "react-virtuoso";
 
 const FilterCategoryItems = ({
@@ -29,6 +30,13 @@ const FilterCategoryItems = ({
 
     setActiveFilter(slug);
   };
+
+  // useSelector
+
+  const footerItemsValue = useSelector((state) => state.footerRtItems.value);
+  useEffect(() => {
+    setCategoryValue(footerItemsValue);
+  }, [footerItemsValue]);
 
   return (
     <Virtuoso

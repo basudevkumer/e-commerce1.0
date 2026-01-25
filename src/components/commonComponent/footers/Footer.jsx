@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Container from "../containers/Container";
 import { allImages } from "@/helpers/ImageProvider";
 import { allIcons } from "@/helpers/IconProvider";
 import { Link } from "react-router-dom";
+import { allCategoryList } from "@/hooks/useCategory";
+import { useDispatch, useSelector } from "react-redux";
+import { addFooterItems } from "@/reduxFeature/slices/fotItemSlice";
+import { activefiltered } from "@/reduxFeature/slices/activeSlice";
 
 const Footer = () => {
   //import icon form rightArrow
@@ -15,15 +19,12 @@ const Footer = () => {
   ///////////////////////
   /// for category nav
   //////////////////////
-  let [category, setCategory] = useState([
-    { id: 1, name: "Computer & Laptop" },
-    { id: 2, name: "SmartPhone" },
-    { id: 3, name: "Headphone" },
-    { id: 4, name: "Accessories" },
-    { id: 5, name: "Camera & Photo" },
-    { id: 6, name: "TV & Homes" },
-    { id: 7, name: "Browse All Product" },
-  ]);
+
+  const {
+    data: categoryData,
+    isPending: categoryItemsLoading,
+    isError: categoryError,
+  } = allCategoryList();
 
   ///////////////////
   /// for Link nav
@@ -31,12 +32,12 @@ const Footer = () => {
 
   let [link, setLink] = useState([
     { id: 1, name: "Shop Product", links: "/shop" },
-    { id: 2, name: "Shoping Cart" , links: "/shopping-card" },
-    { id: 3, name: "Wishlist" , links: "/wishlist"},
-    { id: 4, name: "Compare" ,links:"/compare" },
-    { id: 5, name: "Track Order"  ,links:"/track-order"},
-    { id: 6, name: "Customer Help" ,links:"/customer-support"},
-    { id: 7, name: "About Us", links:"/about"},
+    { id: 2, name: "Shoping Cart", links: "/shopping-card" },
+    { id: 3, name: "Wishlist", links: "/wishlist" },
+    { id: 4, name: "Compare", links: "/compare" },
+    { id: 5, name: "Track Order", links: "/track-order" },
+    { id: 6, name: "Customer Help", links: "/customer-support" },
+    { id: 7, name: "About Us", links: "/about" },
   ]);
 
   /////////////////////////
@@ -57,6 +58,20 @@ const Footer = () => {
     { id: 11, name: "Microwave" },
     { id: 12, name: "Samsung" },
   ]);
+
+  const dispatch = useDispatch();
+  const activeItems = useSelector(state => state.activeItems.value)
+
+
+
+
+  // handle ITems
+
+  const handleCatItems = (items) => {
+    const activeSlug =  [...activeItems,items.slug]
+    dispatch(addFooterItems(items?.slug));
+    dispatch(activefiltered(activeSlug))
+  };
 
   return (
     <div className="bg-gray_900">
@@ -87,27 +102,27 @@ const Footer = () => {
             <div className="">
               <h2 className="labe2 text-gray_00 mb-3">Top Category </h2>
               <ul className="flex flex-col gap-y-[8px]">
-                {category.map((items, index) => {
-                  return items.name === "Browse All Product" ? (
-                    <li
-                      className="flex items-center gap-x-[10px] text-warning_500"
-                      key={items.id}
-                    >
-                      <span className="sm_500 ">Browse All Product</span>
-                      <span className="text-lg">{rightArrow}</span>
-                    </li>
-                  ) : (
-                    <li
-                      className="group  flex items-center gap-x-2 cursor-pointer relative overflow-hidden "
-                      key={items.id}
-                    >
-                      <span className="text-[33px] bg-warning_500  absolute left-[-40px] group-hover:left-0  transition-all duration-300 ease-in-out w-[30px] h-[3px] rounded"></span>
-                      <span className=" sm_500 text-gray_400 group-hover:text-gray_00 transition-all duration-300   transfrom  group-hover:translate-x-[36px] whitespace-nowrap">
-                        {items.name}
-                      </span>
-                    </li>
+                {categoryData?.slice(0, 7)?.map((items, index) => {
+                  return (
+                    <Link to={"/shop"} key={items.id}>
+                      <li
+                        className="group  flex items-center gap-x-2 cursor-pointer relative overflow-hidden "
+                        onClick={() => handleCatItems(items)}
+                      >
+                        <span className="text-[33px] bg-warning_500  absolute left-[-40px] group-hover:left-0  transition-all duration-300 ease-in-out w-[30px] h-[3px] rounded"></span>
+                        <span className=" sm_500 text-gray_400 group-hover:text-gray_00 transition-all duration-300   transfrom  group-hover:translate-x-[36px] whitespace-nowrap">
+                          {items.name}
+                        </span>
+                      </li>
+                    </Link>
                   );
                 })}
+                <Link to={"/shop"}>
+                  <li className="flex items-center gap-x-[10px] text-warning_500 ">
+                    <span className="sm_500 ">Browse All Product</span>
+                    <span className="text-lg">{rightArrow}</span>
+                  </li>
+                </Link>
               </ul>
             </div>
             <div className="">

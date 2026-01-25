@@ -12,42 +12,41 @@ const RightActiveFilter = ({
   const dispatch = useDispatch();
   const activeITems = useSelector((state) => state.activeItems.value);
 
+  
+
   // for icon
   const { plainClose } = allIcons;
 
   //for state handle
 
-useEffect(() => {
-  let newArray = [...activeITems];
+  useEffect(() => {
+    let newArray = [...activeITems];
 
-  if (
-    activeValue &&
-    typeof activeValue === "string" &&
-    !newArray.includes(activeValue)
-  ) {
-    newArray.push(activeValue);
-  }
+    if (
+      activeValue &&
+      typeof activeValue === "string" &&
+      !newArray.includes(activeValue)
+    ) {
+      newArray.push(activeValue);
+    }
 
-  if (
-    searchItems &&
-    searchItems.trim() !== "" &&
-    !newArray.includes(searchItems)
-  ) {
-    newArray.push(searchItems);
-  }
+    if (
+      searchItems &&
+      searchItems.trim() !== "" &&
+      !newArray.includes(searchItems)
+    ) {
+      newArray.push(searchItems);
+    }
 
- 
-  if (newArray.length > activeITems.length) {
-    dispatch(activefiltered(newArray));
-  }
-}, [activeValue, searchItems]);
+    if (newArray.length > activeITems.length) {
+      dispatch(activefiltered(newArray));
+    }
+  }, [activeValue, searchItems]);
 
-
-const handleRemove = (itemToRemove) => {
-  const updatedArray = activeITems.filter((i) => i !== itemToRemove);
-  dispatch(activefiltered(updatedArray));
-};
-
+  const handleRemove = (itemToRemove) => {
+    const updatedArray = activeITems.filter((i) => i !== itemToRemove);
+    dispatch(activefiltered(updatedArray));
+  };
 
   return (
     <div className="py-3 px-6 bg-gray_50 rounded  grid grid-cols-12 gap-x-3">
