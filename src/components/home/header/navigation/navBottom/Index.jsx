@@ -12,7 +12,6 @@ const NavBottom = () => {
   const [isSubChildOpen, setIsSubChildOpen] = useState(null);
   const [hasAnyBrand, setHasAnyBrand] = useState([]);
 
-
   const handleChild = (id) => {
     setIsChildOpen((prev) => (prev === id ? null : id));
   };
@@ -38,12 +37,12 @@ const NavBottom = () => {
   const handleSubChild = (category) => {
     if (allItems?.length && typeof category === "string") {
       const filteredItems = allItems.filter(
-        (item) => item.category === category
+        (item) => item.category === category,
       );
 
       const uniqueBrands = filteredItems.filter(
         (item, index, self) =>
-          index === self.findIndex((t) => t.brand === item.brand)
+          index === self.findIndex((t) => t.brand === item.brand),
       );
 
       setIsSubChildOpen(uniqueBrands);
@@ -119,7 +118,6 @@ const NavBottom = () => {
                           position: "relative",
                         }}
                       >
-                        
                         {subCategoryRowVirtualizer
                           .getVirtualItems()
                           .map((virtualItem) => {
@@ -129,7 +127,6 @@ const NavBottom = () => {
                             if (!brandItem) return null;
 
                             return (
-                              
                               <div
                                 key={virtualItem.key}
                                 style={{
@@ -217,19 +214,23 @@ const NavBottom = () => {
               <p className="sm_400 text-gray_600"> Track Order</p>
             </div>
             <Link to={"/compare"}>
-             <div className="py-[14px] px-6 rounded-[2px] hover:bg-gray_50 transition duration-150 ease-in-out cursor-pointer flex items-center gap-x-2.5 group">
-              <span className="text-gray_600 ">{allItemsIcon[1].icon}</span>
-              <p className="sm_400 text-gray_600"> Compare</p>
-            </div>
+              <div className="py-[14px] px-6 rounded-[2px] hover:bg-gray_50 transition duration-150 ease-in-out cursor-pointer flex items-center gap-x-2.5 group">
+                <span className="text-gray_600 ">{allItemsIcon[1].icon}</span>
+                <p className="sm_400 text-gray_600"> Compare</p>
+              </div>
             </Link>
-            <div className="py-[14px] px-6 rounded-[2px] hover:bg-gray_50 transition duration-150 ease-in-out cursor-pointer flex items-center gap-x-2.5">
-              <span className="text-gray_600 ">{allItemsIcon[2].icon}</span>
-              <p className="sm_400 text-gray_600"> Customer Support</p>
-            </div>
-            <div className="py-[14px] px-6 rounded-[2px] hover:bg-gray_50 transition duration-150 ease-in-out cursor-pointer flex items-center gap-x-2.5">
-              <span className="text-gray_600 ">{allItemsIcon[3].icon}</span>
-              <p className="sm_400 text-gray_600"> Need Help</p>
-            </div>
+            <Link to={"customer-support"}>
+              <div className="py-[14px] px-6 rounded-[2px] hover:bg-gray_50 transition duration-150 ease-in-out cursor-pointer flex items-center gap-x-2.5">
+                <span className="text-gray_600 ">{allItemsIcon[2].icon}</span>
+                <p className="sm_400 text-gray_600"> Customer Support</p>
+              </div>
+            </Link>
+            <Link to={"need-help"}>
+              <div className="py-[14px] px-6 rounded-[2px] hover:bg-gray_50 transition duration-150 ease-in-out cursor-pointer flex items-center gap-x-2.5">
+                <span className="text-gray_600 ">{allItemsIcon[3].icon}</span>
+                <p className="sm_400 text-gray_600"> Need Help</p>
+              </div>
+            </Link>
           </div>
           <div className="flex items-center py-[14px] px-6 rounded-[2px] hover:bg-gray_50 transition duration-150 ease-in-out cursor-pointer gap-x-2.5   ">
             <span className="text-gray_900 ">{allItemsIcon[4].icon}</span>

@@ -31,12 +31,12 @@ const Footer = () => {
 
   let [link, setLink] = useState([
     { id: 1, name: "Shop Product", links: "/shop" },
-    { id: 2, name: "Shoping Cart" },
-    { id: 3, name: "Wishlist" },
-    { id: 4, name: "Compare" },
-    { id: 5, name: "Track Order" },
-    { id: 6, name: "Customer Help" },
-    { id: 7, name: "About Us" },
+    { id: 2, name: "Shoping Cart" , links: "/shopping-card" },
+    { id: 3, name: "Wishlist" , links: "/wishlist"},
+    { id: 4, name: "Compare" ,links:"/compare" },
+    { id: 5, name: "Track Order"  ,links:"/track-order"},
+    { id: 6, name: "Customer Help" ,links:"/customer-support"},
+    { id: 7, name: "About Us", links:"/about"},
   ]);
 
   /////////////////////////

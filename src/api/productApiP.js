@@ -1,4 +1,5 @@
 import { instance } from "./axios";
+
 // get all product
 export async function fetchProductApi() {
   try {

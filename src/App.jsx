@@ -11,6 +11,8 @@ import ShoppingCardPg from "./pages/ShoppingCardPg";
 import UpdateCard from "./pages/UpdateCard";
 import Compare from "./pages/Compare";
 import Wishlist from "./pages/Wishlist";
+import CustomerSupport from "./pages/CustomerSupport";
+import NeedHelp from "./pages/NeedHelp";
 
 const App = () => {
   const queryClient = new QueryClient();
@@ -29,6 +31,8 @@ const App = () => {
               <Route path="/update-card" element={<UpdateCard />} />
               <Route path="/compare" element={<Compare />} />
               <Route path="/wishList" element={<Wishlist />} />
+              <Route path="/customer-support" element={<CustomerSupport />} />
+              <Route path="/need-help" element={<NeedHelp />} />
               <Route path="*" element={<div>Here Find Everything....</div>} />
             </Route>
           </Routes>
