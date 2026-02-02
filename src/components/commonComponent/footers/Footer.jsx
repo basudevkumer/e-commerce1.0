@@ -60,17 +60,16 @@ const Footer = () => {
   ]);
 
   const dispatch = useDispatch();
-  const activeItems = useSelector(state => state.activeItems.value)
-
-
-
+  const activeItems = useSelector((state) => state.activeItems.value);
 
   // handle ITems
 
   const handleCatItems = (items) => {
-    const activeSlug =  [...activeItems,items.slug]
-    dispatch(addFooterItems(items?.slug));
-    dispatch(activefiltered(activeSlug))
+    if (!activeItems?.includes(items.slug)) {
+      const activeSlug = [...activeItems, items.slug];
+      dispatch(addFooterItems(items?.slug));
+      dispatch(activefiltered(activeSlug));
+    }
   };
 
   return (

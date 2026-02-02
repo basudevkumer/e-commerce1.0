@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const loadItemsFromLocalStorage = () => {
   try {
     const data = localStorage.getItem("wishItems");
-    return JSON.parse(data);
+    return data ? JSON.parse(data) : [];
   } catch (error) {
     console.log(error);
     throw error;
@@ -11,7 +11,7 @@ const loadItemsFromLocalStorage = () => {
 };
 
 const initialState = {
-  value: loadItemsFromLocalStorage(),
+  value: loadItemsFromLocalStorage() || [],
 };
 
 export const wishListSlice = createSlice({
@@ -19,6 +19,8 @@ export const wishListSlice = createSlice({
   initialState,
   reducers: {
     addWishItems: (state, actions) => {
+      console.log(actions.payload);
+      
       const existItems = state.value.find(
         (items) => items.id === actions.payload.id,
       );
