@@ -7,10 +7,6 @@ const BestDealContainter = () => {
   // useBestDealProducts give data
   let { data: product = [], isPending, isError } = useBestDealProducts(0);
 
-
-  
-
-
   // error skeleton
   if (isError) {
     return <div>Error........</div>;
