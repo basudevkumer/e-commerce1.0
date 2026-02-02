@@ -17,6 +17,7 @@ import Container from "@/components/commonComponent/containers/Container";
 // import useCategory
 import { useCategory } from "@/hooks/useCategory";
 import { allIcons } from "@/helpers/IconProvider";
+import { Link } from "react-router-dom";
 
 const Index = () => {
   // Destructure useCategory values
@@ -88,13 +89,15 @@ const Index = () => {
             {/* data comes form useCategory() */}
             {data.map((items, index) => {
               return (
-                <SwiperSlide >
-                  <div className="shadow-xl border border-gray_100 w-full h-[236px] flex flex-col items-center gap-y-4   px-[28px] py-[24px] rounded-md  !h-[270px] ">
-                    <picture>
-                      <img src={items.thumbnail} alt="smallCategorImages" />
-                    </picture>
-                    <p className="md_500">{items.title}</p>
-                  </div>
+                <SwiperSlide>
+                  <Link to={`/product-details/${items?.id}`} key={index}>
+                    <div className="shadow-xl border border-gray_100 w-full h-[236px] flex flex-col items-center gap-y-4   px-[28px] py-[24px] rounded-md  !h-[270px]">
+                      <picture>
+                        <img src={items.thumbnail} alt="smallCategorImages" />
+                      </picture>
+                      <p className="md_500">{items.title}</p>
+                    </div>
+                  </Link>
                 </SwiperSlide>
               );
             })}
