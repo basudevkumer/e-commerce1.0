@@ -3,6 +3,7 @@ import React from "react";
 import { discountObject } from "@/helpers/DiscountDetails";
 import { allImages } from "@/helpers/ImageProvider";
 import Button from "@components/commonComponent/commonButton/Button"
+import { Link } from "react-router-dom";
 
 const DiscountCard = ({ className }) => {
   // discountobject destructure here
@@ -29,7 +30,8 @@ const DiscountCard = ({ className }) => {
             {homePageDiscountBannar[3].discountEndDate}
           </span>
         </p> 
-        <Button children={"Shop now"} className={" !bg-primary_500 !text-gray_00"}/>
+        <Link to={"/shop"}>
+        <Button children={"Shop now"} className={" !bg-primary_500 !text-gray_00"}/></Link>
       </div>
       {/* for discount text top part */}
       <div className="">

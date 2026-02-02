@@ -10,9 +10,15 @@ const HomeProdctAd = () => {
       <Container>
         <div className="grid grid-cols-2 gap-x-6">
           {homeAds.map((items) => {
-            return ( <picture key={items.id} className="cursor-pointer">
-              <img src={items.src} alt="homeAdimages" className="w-full h-[336px] object-cover" />
-            </picture>)
+            return (
+              <picture key={items.id} className="cursor-pointer">
+                <img
+                  src={items.src}
+                  alt="homeAdimages"
+                  className="w-full h-[336px] object-cover"
+                />
+              </picture>
+            );
           })}
         </div>
       </Container>

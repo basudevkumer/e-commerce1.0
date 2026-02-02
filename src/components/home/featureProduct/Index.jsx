@@ -6,6 +6,7 @@ import { useCategory, useSingleCategoryProduct } from "@/hooks/useCategory";
 import React, { useState } from "react";
 import Loading from "../loading/Index";
 import Error from "../error/Index";
+import { Link } from "react-router-dom";
 const FeatureProduct = () => {
   // create a object
   let [featureNavText, setFeatureNavText] = useState([
@@ -188,7 +189,13 @@ const FeatureProduct = () => {
                       key={items.id}
                       onClick={() => handleClick(items.value)}
                     >
-                      {items.text}
+                      {console.log(items.text)}
+
+                      {browserText ? (
+                        <Link to={"/shop"}>Browse All Product</Link>
+                      ) : (
+                        items?.text
+                      )}
                       {browserText && (
                         <span className="text-sm"> {rightArrow}</span>
                       )}
