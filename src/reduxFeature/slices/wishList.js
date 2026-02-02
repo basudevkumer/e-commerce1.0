@@ -19,8 +19,7 @@ export const wishListSlice = createSlice({
   initialState,
   reducers: {
     addWishItems: (state, actions) => {
-      console.log(actions.payload);
-      
+     
       const existItems = state.value.find(
         (items) => items.id === actions.payload.id,
       );

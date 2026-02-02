@@ -11,7 +11,7 @@ const loadItemsFromLocalStorage = () => {
 };
 
 const initialState = {
-  value: loadItemsFromLocalStorage(),
+  value: loadItemsFromLocalStorage() || [],
 };
 
 export const shopSlice = createSlice({
@@ -19,10 +19,11 @@ export const shopSlice = createSlice({
   initialState,
   reducers: {
     addTocard: (state, action) => {
+      
       const incommingProduct = action.payload;
 
       const existingProduct = state.value.find(
-        (items) => items.id === incommingProduct.id
+        (items) => items.id === incommingProduct.id,
       );
 
       if (existingProduct) {

@@ -4,15 +4,17 @@ import { allIcons } from "@/helpers/IconProvider";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addWishItems } from "@/reduxFeature/slices/wishList";
+import { addTocard } from "@/reduxFeature/slices/shopSlice";
 
 const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
 
   //import from iconProvider
   const { productInfoActivites } = allIcons;
- // for handling the events
+  // for handling the events
   const handleClick = (item) => {
     dispatch(addWishItems(item));
+    dispatch(addTocard(item));
   };
   return (
     <div className="border border-gray_100  relative p-4 rounded  w-full  h-[320px] shadow-xl hover:-translate-y-[8px] transition duration-500 ease-in-out group">
