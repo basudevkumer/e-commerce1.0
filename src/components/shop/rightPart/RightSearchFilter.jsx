@@ -1,7 +1,11 @@
 import { allIcons } from "@/helpers/IconProvider";
+import { globalSearch } from "@/reduxFeature/slices/globalSearchSlice";
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
 const RightSideFilter = ({ onSearch, onSort, sortValue }) => {
+  const dispatch = useDispatch();
+
   const sortOptions = [
     { label: "Select Shorting", value: "" },
     { label: "Most Popular", value: "popular" },
@@ -21,12 +25,14 @@ const RightSideFilter = ({ onSearch, onSort, sortValue }) => {
   const handleClicked = () => {
     onSearch(value.trim());
     setValue("");
+    // dispatch(globalSearch(null));
   };
   // clicked inter button
   const handleKeyPress = (e) => {
     if (e.code === "Enter") {
       onSearch(value.trim());
       setValue("");
+      // dispatch(globalSearch(null));
     }
   };
   // handleShort

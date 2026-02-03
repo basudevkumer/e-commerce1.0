@@ -6,7 +6,8 @@ import taxReducer from "./slices/taxSlice";
 import activeReducer from "./slices/activeSlice";
 import compareReducer from "./slices/compareSlice";
 import whisReducer from "./slices/wishList";
-import footerItemsReducer from "./slices/fotItemSlice"
+import footerItemsReducer from "./slices/fotItemSlice";
+import globalSearchReducer from "./slices/globalSearchSlice";
 
 export const store = configureStore({
   reducer: {
@@ -18,5 +19,6 @@ export const store = configureStore({
     compareItems: compareReducer,
     wishList: whisReducer,
     footerRtItems: footerItemsReducer,
+    globalSearchItems: globalSearchReducer,
   },
 });

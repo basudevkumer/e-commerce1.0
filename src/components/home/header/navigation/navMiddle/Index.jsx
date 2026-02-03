@@ -4,14 +4,15 @@ import Container from "@/components/commonComponent/containers/Container";
 import AddToCartPop from "@/components/home/addToCardPop/AddToCartPop";
 import { allIcons } from "@/helpers/IconProvider";
 import { allImages } from "@/helpers/ImageProvider";
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useTotalItems } from "@/hooks/useCategory";
+import { globalSearch } from "@/reduxFeature/slices/globalSearchSlice";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const NavMiddle = () => {
-  
- 
-
+  // dispatch
+  const dispatch = useDispatch();
   /////////////////////
   //// import images
   /////////////////////
@@ -20,6 +21,22 @@ const NavMiddle = () => {
   //// import icons
   /////////////////////
   const { searchIcon, navMiddleIcon } = allIcons;
+
+  // state manage
+  const [inputValue, setInputValue] = useState("");
+  const [debouceValue, setDebounceValue] = useState("");
+
+  // debounch logic
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebounceValue(inputValue);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [inputValue]);
+
+  const { data, isLoading, isError } = useTotalItems();
 
   /**
    * render search input
@@ -30,12 +47,9 @@ const NavMiddle = () => {
    */
   let [showIcon, setShowIcon] = useState(true);
   const handleChange = (e) => {
-    let inputValue = e.target.value;
-    if (inputValue.length > 0) {
-      setShowIcon(false);
-    } else {
-      setShowIcon(true);
-    }
+    const value = e.target.value;
+    setInputValue(value);
+    setShowIcon(value.length === 0);
   };
 
   // manage state
@@ -43,7 +57,7 @@ const NavMiddle = () => {
   const [isAddToCardOpen, setIsAddToCardOpen] = useState(null);
 
   //data from add to car
-  const addTocardItems = useSelector(state => state.addCard.value)
+  const addTocardItems = useSelector((state) => state.addCard.value);
   // handle event
 
   const handleAccount = (id) => {
@@ -52,6 +66,18 @@ const NavMiddle = () => {
   const handleCard = (id) => {
     setIsAddToCardOpen((prev) => (prev === id ? null : id));
   };
+  const handleSearch = () => {
+    if (!data && data?.length === 0) return;
+
+    dispatch(globalSearch(debouceValue));
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  };
+
   return (
     <div className="bg-secondary_700 py-5 border-t border-[#ffffff41]">
       <Container>
@@ -68,6 +94,7 @@ const NavMiddle = () => {
                 placeholder="Search for anything..."
                 className="bg-gray_00 w-[646px] px-5 py-[14px] placeholder:sm_400 focus:outline-none rounded"
                 onChange={handleChange}
+                onKeyDown={handleKeyDown}
               />
               {showIcon ? (
                 <span className="absolute right-5 text-gray_900  top-[50%] -translate-y-1/2 text-xl">
@@ -75,7 +102,10 @@ const NavMiddle = () => {
                 </span>
               ) : (
                 <span className="absolute right-11 text-gray_900  top-[50%] -translate-y-1/2 text-xl">
-                  <button className="label2 py-[4px] px-[10px] text-gray_900  bg-warning_500 rounded  cursor-pointer">
+                  <button
+                    className="label2 py-[4px] px-[10px] text-gray_900  bg-warning_500 rounded  cursor-pointer"
+                    onClick={handleSearch}
+                  >
                     Search
                   </button>
                 </span>

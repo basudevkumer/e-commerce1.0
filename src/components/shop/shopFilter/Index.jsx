@@ -17,8 +17,14 @@ import RightSideFilter from "../rightPart/RightSearchFilter";
 import ProdtRightCont from "../rightPart/ProdtRightCont";
 import BestDealProdtBannar from "@/components/commonComponent/bestDeal2/BestDealProdtBannar";
 import RightActiveFilter from "../rightPart/RightActiveFilter";
+import { useDispatch, useSelector } from "react-redux";
+import { globalSearch } from "@/reduxFeature/slices/globalSearchSlice";
 
 const ShopProductFilter = () => {
+  // useselector form data & dispatch
+  const searchItems = useSelector((state) => state?.globalSearchItems?.value);
+  const dispatch = useDispatch();
+
   // state manage
   // price ranger preset and slider
   const [priceRange, setPriceRange] = useState([0, 100000]);
@@ -65,7 +71,7 @@ const ShopProductFilter = () => {
     }
 
     return Array.isArray(productData) ? productData : [];
-  }, [selectedData, singleCategoryProd, productData, search]);
+  }, [selectedData, singleCategoryProd, productData, search, searchItems]);
 
   const searchFilteredData = useMemo(() => {
     if (!search.trim()) return mainDataSource;
@@ -73,7 +79,7 @@ const ShopProductFilter = () => {
     const searchKeyword = search?.toLowerCase().split(" ").filter(Boolean);
 
     return mainDataSource?.filter((product) => {
-      const searchAbleText = `
+      const searchAbleText = `  
             ${product?.title || ""}
             ${product?.description || ""}
             ${product?.category || ""}
@@ -88,7 +94,8 @@ const ShopProductFilter = () => {
   // filter price
   const filterPrice = useMemo(() => {
     const catchPriceData = searchFilteredData?.filter(
-      (prodct) => prodct.price >= priceRange[0] && prodct.price <= priceRange[1]
+      (prodct) =>
+        prodct.price >= priceRange[0] && prodct.price <= priceRange[1],
     );
     return catchPriceData;
   }, [searchFilteredData, priceRange]);
@@ -117,13 +124,13 @@ const ShopProductFilter = () => {
 
     if (brand.length > 0) {
       catchFinalValue = catchFinalValue?.filter((brandvalue) =>
-        brand.includes(brandvalue.brand)
+        brand.includes(brandvalue.brand),
       );
     }
 
     if (pTags) {
       catchFinalValue = catchFinalValue?.filter((tagItems) =>
-        tagItems.tags?.includes(pTags)
+        tagItems.tags?.includes(pTags),
       );
     }
 
@@ -136,7 +143,7 @@ const ShopProductFilter = () => {
     }
     if (sortBy === "popular") {
       catchFinalValue = [...catchFinalValue].sort(
-        (a, b) => b.rating - a.rating
+        (a, b) => b.rating - a.rating,
       );
     }
 
@@ -166,6 +173,21 @@ const ShopProductFilter = () => {
       setBrand([]);
     }
   }, [pTags]);
+
+  //for global serch pass local search state
+
+  useEffect(() => {
+    
+    if(searchItems && searchItems !== search){
+      setSearch(searchItems)
+    }
+
+  }, [searchItems]);
+  useEffect(() => {
+    
+    dispatch(globalSearch(""))
+
+  }, [search]);
 
   // reset the ranger input slider
   useEffect(() => {

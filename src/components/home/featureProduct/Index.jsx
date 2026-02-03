@@ -174,7 +174,7 @@ const FeatureProduct = () => {
             <div className=" flex items-center  justify-between">
               <h3 className="heading3 text-gray_900">Featured Products</h3>
               <div className="flex gap-x-[10px]">
-                {featureNavText.map((items, index) => {
+                {featureNavText.map((items) => {
                   let browserText = items.text === "Browse All Product";
 
                   return (
@@ -189,7 +189,7 @@ const FeatureProduct = () => {
                       key={items.id}
                       onClick={() => handleClick(items.value)}
                     >
-                      {console.log(items.text)}
+                  
 
                       {browserText ? (
                         <Link to={"/shop"}>Browse All Product</Link>
