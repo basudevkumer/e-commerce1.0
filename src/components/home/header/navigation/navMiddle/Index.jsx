@@ -82,9 +82,7 @@ const NavMiddle = () => {
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       handleSearch();
-      setInputValue("");
-      setDebounceValue("");
-      setShowIcon(true);
+     
     }
   };
 
