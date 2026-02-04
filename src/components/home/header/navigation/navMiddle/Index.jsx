@@ -76,6 +76,7 @@ const NavMiddle = () => {
     setInputValue("");
     setDebounceValue("");
     setShowIcon(true);
+    navigate("/shop");
   };
 
   const handleKeyDown = (e) => {
@@ -84,7 +85,6 @@ const NavMiddle = () => {
       setInputValue("");
       setDebounceValue("");
       setShowIcon(true);
-      navigate("/shop");
     }
   };
 
