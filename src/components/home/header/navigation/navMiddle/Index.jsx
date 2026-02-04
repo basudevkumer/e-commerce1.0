@@ -111,14 +111,14 @@ const NavMiddle = () => {
                 </span>
               ) : (
                 <span className="absolute right-11 text-gray_900  top-[50%] -translate-y-1/2 text-xl">
-                  <Link to={"/shop"}>
+                  
                     <button
                       className="label2 py-[4px] px-[10px] text-gray_900  bg-warning_500 rounded  cursor-pointer"
                       onClick={handleSearch}
                     >
                       Search
                     </button>
-                  </Link>
+                 
                 </span>
               )}
             </div>
