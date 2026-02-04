@@ -22,7 +22,9 @@ import { globalSearch } from "@/reduxFeature/slices/globalSearchSlice";
 
 const ShopProductFilter = () => {
   // useselector form data & dispatch
-  const searchItems = useSelector((state) => state?.globalSearchItems?.value);
+  const searchItems =
+    useSelector((state) => state?.globalSearchItems?.value) || "";
+    
   const dispatch = useDispatch();
 
   // state manage
@@ -35,8 +37,7 @@ const ShopProductFilter = () => {
   const [brand, setBrand] = useState([]);
   // popular tags
   const [pTags, setPTags] = useState("");
-  // for searching
-  const [search, setSearch] = useState("");
+
   // for sorting
   const [sortBy, setSortBy] = useState("");
   // active value
@@ -66,30 +67,29 @@ const ShopProductFilter = () => {
 
   // mainDataSource
   const mainDataSource = useMemo(() => {
-    if (selectedData && !search.trim()) {
-      return Array.isArray(singleCategoryProd) ? singleCategoryProd : [];
+    if (selectedData) {
+      return singleCategoryProd;
     }
-
-    return Array.isArray(productData) ? productData : [];
-  }, [selectedData, singleCategoryProd, productData, search, searchItems]);
+    return productData;
+  }, [selectedData, singleCategoryProd, productData]);
 
   const searchFilteredData = useMemo(() => {
-    if (!search.trim()) return mainDataSource;
+    if (!searchItems.trim()) return mainDataSource;
 
-    const searchKeyword = search?.toLowerCase().split(" ").filter(Boolean);
+    const keywords = searchItems.toLowerCase().split(" ").filter(Boolean);
 
     return mainDataSource?.filter((product) => {
-      const searchAbleText = `  
-            ${product?.title || ""}
-            ${product?.description || ""}
-            ${product?.category || ""}
-            ${product?.brand || ""}
-            ${product?.tags?.flatMap((items) => items)?.join(" ") || ""}
-         `.toLowerCase();
+      const text = `
+      ${product?.title}
+      ${product?.description}
+      ${product?.category}
+      ${product?.brand}
+      ${product?.tags?.join(" ")}
+    `.toLowerCase();
 
-      return searchKeyword.every((items) => searchAbleText.includes(items));
+      return keywords.every((word) => text.includes(word));
     });
-  }, [search, mainDataSource]);
+  }, [searchItems, mainDataSource]);
 
   // filter price
   const filterPrice = useMemo(() => {
@@ -156,8 +156,10 @@ const ShopProductFilter = () => {
     setPriceRange([0, 100000]);
     setPTags("");
     setPricePresetRange([0, 0]);
-    setSearch("");
     setSortBy("");
+    if (!searchItems.trim()) {
+      dispatch(globalSearch(""));
+    }
   }, [selectedData]);
 
   //tag value reset || clear when brand clicked
@@ -176,18 +178,11 @@ const ShopProductFilter = () => {
 
   //for global serch pass local search state
 
-  useEffect(() => {
-    
-    if(searchItems && searchItems !== search){
-      setSearch(searchItems)
-    }
-
-  }, [searchItems]);
-  useEffect(() => {
-    
-    dispatch(globalSearch(""))
-
-  }, [search]);
+  // useEffect(() => {
+  //   if (searchItems && searchItems !== search) {
+  //     setSearch(searchItems);
+  //   }
+  // }, [searchItems]);
 
   // reset the ranger input slider
   useEffect(() => {
@@ -202,11 +197,11 @@ const ShopProductFilter = () => {
 
   // reset tag and brand
   useEffect(() => {
-    if (search.trim()) {
+    if (searchItems.trim()) {
       setBrand([]);
       setPTags("");
     }
-  }, [search]);
+  }, [searchItems]);
 
   return (
     <div>
@@ -266,7 +261,7 @@ const ShopProductFilter = () => {
             <div className="col-span-4">
               <div>
                 <RightSideFilter
-                  onSearch={setSearch}
+                  // onSearch={setSearch}
                   onSort={setSortBy}
                   sortValue={sortBy}
                 />
@@ -275,7 +270,7 @@ const ShopProductFilter = () => {
                 <RightActiveFilter
                   activeValue={catchActiveValue}
                   countfilteredProduct={finalResults || []}
-                  searchItems={search}
+                  searchItems={searchItems}
                 />
               </div>
 

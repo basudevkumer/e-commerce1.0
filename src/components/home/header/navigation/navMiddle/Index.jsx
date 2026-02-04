@@ -33,12 +33,11 @@ const NavMiddle = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebounceValue(inputValue);
-    }, 1000);
+    }, 500);
 
     return () => clearTimeout(timer);
   }, [inputValue]);
 
-  const { data, isLoading, isError } = useTotalItems();
 
   /**
    * render search input
@@ -69,7 +68,6 @@ const NavMiddle = () => {
     setIsAddToCardOpen((prev) => (prev === id ? null : id));
   };
   const handleSearch = () => {
-    if (!data && data?.length === 0) return;
 
     dispatch(globalSearch(debouceValue));
 
@@ -82,7 +80,6 @@ const NavMiddle = () => {
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       handleSearch();
-     
     }
   };
 
@@ -111,14 +108,12 @@ const NavMiddle = () => {
                 </span>
               ) : (
                 <span className="absolute right-11 text-gray_900  top-[50%] -translate-y-1/2 text-xl">
-                  
-                    <button
-                      className="label2 py-[4px] px-[10px] text-gray_900  bg-warning_500 rounded  cursor-pointer"
-                      onClick={handleSearch}
-                    >
-                      Search
-                    </button>
-                 
+                  <button
+                    className="label2 py-[4px] px-[10px] text-gray_900  bg-warning_500 rounded  cursor-pointer"
+                    onClick={handleSearch}
+                  >
+                    Search
+                  </button>
                 </span>
               )}
             </div>
@@ -130,8 +125,8 @@ const NavMiddle = () => {
                 // const cartIsActive = items.id === isAddToCardOpen;
 
                 return items.itemName === "shopCart" ? (
-                  <div className="relative">
-                    <li key={items.id} className="relative">
+                  <div className="relative" key={items.id}>
+                    <li className="relative">
                       <span
                         className="text-gray_00 text-[32px] cursor-pointer  bg-red_500 z-10"
                         onClick={() => handleAccount(items.id)}
@@ -150,7 +145,7 @@ const NavMiddle = () => {
                     </span>
                   </div>
                 ) : (
-                  <Link to={items.to}>
+                  <Link to={items.to} key={items.id}>
                     <li key={items.id} className=" relative">
                       <span
                         onClick={() => handleAccount(items.id)}

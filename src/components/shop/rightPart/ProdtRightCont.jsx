@@ -19,6 +19,7 @@ const ProdtRightCont = ({ allFilteredItems = [] }) => {
             height: `${rowVirtualizer.getTotalSize()}px`,
             position: "relative",
           }}
+        
         >
           {rowVirtualizer.getVirtualItems().map((row) => {
             const start = row.index * 4;

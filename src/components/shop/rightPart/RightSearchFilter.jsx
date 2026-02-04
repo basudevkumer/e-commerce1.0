@@ -3,7 +3,7 @@ import { globalSearch } from "@/reduxFeature/slices/globalSearchSlice";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
-const RightSideFilter = ({ onSearch, onSort, sortValue }) => {
+const RightSideFilter = ({ onSort, sortValue }) => {
   const dispatch = useDispatch();
 
   const sortOptions = [
@@ -23,16 +23,14 @@ const RightSideFilter = ({ onSearch, onSort, sortValue }) => {
   };
   // clicked event
   const handleClicked = () => {
-    onSearch(value.trim());
+    if (!value.trim()) return;
+    dispatch(globalSearch(value.trim()));
     setValue("");
-    // dispatch(globalSearch(null));
   };
   // clicked inter button
   const handleKeyPress = (e) => {
     if (e.code === "Enter") {
-      onSearch(value.trim());
-      setValue("");
-      // dispatch(globalSearch(null));
+      handleClicked();
     }
   };
   // handleShort
