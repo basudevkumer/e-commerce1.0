@@ -70,11 +70,18 @@ const NavMiddle = () => {
     if (!data && data?.length === 0) return;
 
     dispatch(globalSearch(debouceValue));
+
+    setInputValue("");
+    setDebounceValue("");
+    setShowIcon(true);
   };
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       handleSearch();
+      setInputValue("");
+      setDebounceValue("");
+      setShowIcon(true); 
     }
   };
 
@@ -95,6 +102,7 @@ const NavMiddle = () => {
                 className="bg-gray_00 w-[646px] px-5 py-[14px] placeholder:sm_400 focus:outline-none rounded"
                 onChange={handleChange}
                 onKeyDown={handleKeyDown}
+                value={inputValue}
               />
               {showIcon ? (
                 <span className="absolute right-5 text-gray_900  top-[50%] -translate-y-1/2 text-xl">
