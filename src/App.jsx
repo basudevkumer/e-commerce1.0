@@ -14,6 +14,7 @@ import Wishlist from "./pages/Wishlist";
 import CustomerSupport from "./pages/CustomerSupport";
 import NeedHelp from "./pages/NeedHelp";
 import Checkout from "./pages/Checkout";
+import OrderSuccess from "./pages/OrderSuccess";
 
 const App = () => {
   const queryClient = new QueryClient();
@@ -35,6 +36,7 @@ const App = () => {
               <Route path="/customer-support" element={<CustomerSupport />} />
               <Route path="/need-help" element={<NeedHelp />} />
               <Route path="/checkout" element={<Checkout />} />
+              <Route path="/order-success" element={<OrderSuccess />} />
               <Route path="*" element={<div>Here Find Everything....</div>} />
             </Route>
           </Routes>

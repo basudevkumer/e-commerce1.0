@@ -5,6 +5,7 @@ import { tax } from "@/reduxFeature/slices/taxSlice";
 
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const ShoppingRight = () => {
   const dispatch = useDispatch();
@@ -58,10 +59,12 @@ const ShoppingRight = () => {
           </h3>
         </div>
         <div>
-          <Button
-            children={"Proceed to Checkout"}
-            className={" justify-center !bg-primary_500 !text-gray_00"}
-          />
+          <Link to={"/checkout"}>
+            <Button
+              children={"Proceed to Checkout"}
+              className={" justify-center !bg-primary_500 !text-gray_00"}
+            />
+          </Link>
         </div>
       </div>
       <div className="mt-6 border border-gray_100 rounded">

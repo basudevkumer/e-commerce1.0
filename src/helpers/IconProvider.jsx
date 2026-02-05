@@ -33,6 +33,10 @@ import { IoClose } from "react-icons/io5";
 import { FaChevronDown } from "react-icons/fa6";
 import { FaChevronUp } from "react-icons/fa6";
 import { FaChevronRight } from "react-icons/fa6";
+import { FaRegCheckCircle } from "react-icons/fa";
+import { FiLayers } from "react-icons/fi";
+
+
 
 import {
   RiShieldCheckLine,
@@ -137,4 +141,6 @@ export const allIcons = {
     { id: 2, icon: <FaChevronUp /> },
     { id: 3, icon: <FaChevronRight /> },
   ],
+  checkmark : <FaRegCheckCircle/>,
+  layer: <FiLayers/>
 };
