@@ -3,14 +3,18 @@ import { allIcons } from "@/helpers/IconProvider";
 import { allCategoryList, useTotalItems } from "@/hooks/useCategory";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import React, { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const NavBottom = () => {
+  const navigate = useNavigate();
+
   // manage state
   const [isOpen, setIsOpen] = useState(false);
   const [isClildOpen, setIsChildOpen] = useState(null);
   const [isSubChildOpen, setIsSubChildOpen] = useState(null);
   const [hasAnyBrand, setHasAnyBrand] = useState([]);
+
+  console.log(isSubChildOpen);
 
   const handleChild = (id) => {
     setIsChildOpen((prev) => (prev === id ? null : id));
@@ -40,20 +44,32 @@ const NavBottom = () => {
         (item) => item.category === category,
       );
 
+      const filterTitle = filteredItems?.map((items) => {
+        return items?.title;
+      });
+
       const uniqueBrands = filteredItems.filter(
         (item, index, self) =>
           index === self.findIndex((t) => t.brand === item.brand),
       );
 
-      setIsSubChildOpen(uniqueBrands);
+      setIsSubChildOpen(
+        uniqueBrands?.length > 1 ? uniqueBrands : filteredItems,
+      );
 
       const catchBrand = uniqueBrands
         ?.map((items) => items?.brand)
         ?.filter(Boolean);
 
-      setHasAnyBrand(catchBrand);
+      setHasAnyBrand(catchBrand?.length > 0 ? catchBrand : filterTitle);
     }
   };
+
+  const handleSubNestChild = (items) => {
+    navigate(`/product-details/${items?.id}`);
+    setIsOpen(false);
+  };
+
   const hasBrand = (slug) => {
     if (!allItems?.length) return false;
 
@@ -138,8 +154,9 @@ const NavBottom = () => {
                                   transform: `translateY(${virtualItem.start}px)`,
                                 }}
                                 className="p-5 text-gray_600 hover:text-gray_900  hover:bg-gray_50 cursor-pointer transition duration-300 ease-in-out sm_400 flex items-center"
+                                onClick={() => handleSubNestChild(brandItem)}
                               >
-                                {brandItem.brand}
+                                {brandItem?.brand || brandItem?.title}
                               </div>
                             );
                           })}
