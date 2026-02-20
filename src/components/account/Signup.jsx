@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { FaRegUser, FaRegEnvelope, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
+import BreadCrumb from "../commonComponent/breadcrumb/BreadCrumb";
 
 const Signup = () => {
   const [showPass, setShowPass] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray_50 font-publicSans">
+   <div>
+    <BreadCrumb/>
+     <div className="min-h-screen flex items-center justify-center bg-gray_50 font-publicSans">
       <div className="w-full max-w-md bg-gray_00 rounded-2xl shadow-lg p-8">
 
         {/* Header */}
@@ -120,6 +123,7 @@ const Signup = () => {
         </p>
       </div>
     </div>
+   </div>
   );
 };
 
