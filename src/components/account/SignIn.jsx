@@ -1,9 +1,14 @@
 import { allIcons } from "@/helpers/IconProvider";
-import React from "react";
+import React, { useState } from "react";
 import Button from "../commonComponent/commonButton/Button";
 import { Link } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const SignIn = ({ setIsAccountOpen }) => {
+  //manage state
+
+  const [showPassword, setShowPassword] = useState(false);
+
   // manage event
 
   const handleClicked = () => {
@@ -35,12 +40,15 @@ const SignIn = ({ setIsAccountOpen }) => {
           </div>
           <div className="relative ">
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               id="pass"
               className="w-[360px] h-[55px] border border-gray_100 rounded sm_400 text-gray_900 "
             />
-            <span className="absolute text-xl top-1/2 -translate-y-1/2 right-5 z-50 cursor-pointer z-60">
-              {productInfoActivites[2].icon}
+            <span
+              className="absolute text-xl top-1/2 -translate-y-1/2 right-5 z-50 cursor-pointer z-60"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
             </span>
           </div>
 
@@ -50,6 +58,7 @@ const SignIn = ({ setIsAccountOpen }) => {
               className={`
             justify-center  !bg-primary_500 !text-gray_00
             `}
+              onClick={handleClicked}
             />
           </div>
           <div className="flex justify-between items-center gap-x-2 mt-6 mb-3   ">
