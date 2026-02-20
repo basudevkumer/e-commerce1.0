@@ -14,7 +14,7 @@ const NavBottom = () => {
   const [isSubChildOpen, setIsSubChildOpen] = useState(null);
   const [hasAnyBrand, setHasAnyBrand] = useState([]);
 
-  console.log(isSubChildOpen);
+
 
   const handleChild = (id) => {
     setIsChildOpen((prev) => (prev === id ? null : id));

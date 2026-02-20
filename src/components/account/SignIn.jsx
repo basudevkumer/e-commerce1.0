@@ -1,8 +1,16 @@
 import { allIcons } from "@/helpers/IconProvider";
 import React from "react";
 import Button from "../commonComponent/commonButton/Button";
+import { Link } from "react-router-dom";
 
-const SignIn = () => {
+const SignIn = ({ setIsAccountOpen }) => {
+  // manage event
+
+  const handleClicked = () => {
+    setIsAccountOpen(null);
+  };
+
+  //for icons
   const { productInfoActivites } = allIcons;
   return (
     <div className="p-8 shadow-2xl  flex flex-col items-center text-gray_900 bg-gray_00 rounded">
@@ -36,21 +44,29 @@ const SignIn = () => {
             </span>
           </div>
 
-       <div className="mt-5">
-           <Button
-            children={"Login"}
-            className={`
+          <div className="mt-5">
+            <Button
+              children={"Login"}
+              className={`
             justify-center  !bg-primary_500 !text-gray_00
             `}
-          />
-       </div>
+            />
+          </div>
           <div className="flex justify-between items-center gap-x-2 mt-6 mb-3   ">
             <div className="border border-gray_100 w-full"></div>
-            
-            <p className="text-gray_600 sm_500 whitespace-nowrap ">Don’t have account</p> 
+
+            <p className="text-gray_600 sm_500 whitespace-nowrap ">
+              Don’t have account
+            </p>
             <div className="border border-gray_100 w-full"></div>
           </div>
-          <button className=" border-2 border-primary_500 text-primary_500 py-1cursor-pointer  heading7">Create account</button>
+
+          <button
+            className=" border-2 border-primary_500 text-primary_500 py-1 cursor-pointer   heading7"
+            onClick={handleClicked}
+          >
+            <Link to={"/signup"}>Create account</Link>
+          </button>
         </div>
       </div>
     </div>

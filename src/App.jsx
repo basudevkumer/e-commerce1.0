@@ -15,6 +15,7 @@ import CustomerSupport from "./pages/CustomerSupport";
 import NeedHelp from "./pages/NeedHelp";
 import Checkout from "./pages/Checkout";
 import OrderSuccess from "./pages/OrderSuccess";
+import Signup from "./components/account/Signup";
 
 const App = () => {
   const queryClient = new QueryClient();
@@ -37,6 +38,7 @@ const App = () => {
               <Route path="/need-help" element={<NeedHelp />} />
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/order-success" element={<OrderSuccess />} />
+              <Route path="/signup" element={<Signup />} />
               <Route path="*" element={<div>Here Find Everything....</div>} />
             </Route>
           </Routes>

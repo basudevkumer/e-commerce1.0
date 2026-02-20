@@ -156,7 +156,7 @@ const NavMiddle = () => {
 
                       {isActive && items.id === 3 && (
                         <div className="absolute left-[-430px] top-12 w-[460px]   z-60">
-                          <SignIn />
+                          <SignIn setIsAccountOpen={setIsAccountOpen} />
                         </div>
                       )}
                     </li>
