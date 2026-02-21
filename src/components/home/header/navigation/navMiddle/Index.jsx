@@ -38,7 +38,6 @@ const NavMiddle = () => {
     return () => clearTimeout(timer);
   }, [inputValue]);
 
-
   /**
    * render search input
    * add onChange event handler to control dynamic icon rendering .
@@ -68,7 +67,6 @@ const NavMiddle = () => {
     setIsAddToCardOpen((prev) => (prev === id ? null : id));
   };
   const handleSearch = () => {
-
     dispatch(globalSearch(debouceValue));
 
     setInputValue("");
@@ -154,11 +152,7 @@ const NavMiddle = () => {
                         {items.icon}{" "}
                       </span>
 
-                      {isActive && items.id === 3 && (
-                        <div className="absolute left-[-430px] top-12 w-[460px]   z-60">
-                          <SignIn setIsAccountOpen={setIsAccountOpen} />
-                        </div>
-                      )}
+                     
                     </li>
                   </Link>
                 );

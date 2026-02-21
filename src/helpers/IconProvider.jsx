@@ -36,8 +36,6 @@ import { FaChevronRight } from "react-icons/fa6";
 import { FaRegCheckCircle } from "react-icons/fa";
 import { FiLayers } from "react-icons/fi";
 
-
-
 import {
   RiShieldCheckLine,
   RiTruckLine,
@@ -65,7 +63,7 @@ export const allIcons = {
       itemName: "shopCart",
     },
     { id: 2, icon: <FaRegHeart />, to: "/wishlist", itemName: "wishlist" },
-    { id: 3, icon: <AiOutlineUser />, itemName: "account" },
+    { id: 3, icon: <AiOutlineUser />, to: "/login", itemName: "account" },
   ],
   allItemsIcon: [
     { id: 1, icon: <IoLocationOutline /> },
@@ -141,6 +139,6 @@ export const allIcons = {
     { id: 2, icon: <FaChevronUp /> },
     { id: 3, icon: <FaChevronRight /> },
   ],
-  checkmark : <FaRegCheckCircle/>,
-  layer: <FiLayers/>
+  checkmark: <FaRegCheckCircle />,
+  layer: <FiLayers />,
 };
