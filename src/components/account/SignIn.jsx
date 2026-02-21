@@ -325,16 +325,16 @@ const SignIn = () => {
                 {/* Additional Links */}
                 <div className="mt-6 pt-6 border-t border-gray_100">
                   <div className="flex justify-center gap-4 text-xs text-gray_500">
-                    <Link to="/privacy" className="hover:text-primary_500 hover:underline flex items-center gap-1">
+                    <Link to="/need-help" className="hover:text-primary_500 hover:underline flex items-center gap-1">
                       <FaShieldAlt size={12} />
                       Privacy
                     </Link>
                     <span>•</span>
-                    <Link to="/terms" className="hover:text-primary_500 hover:underline">
+                    <Link to="/customer-support" className="hover:text-primary_500 hover:underline">
                       Terms
                     </Link>
                     <span>•</span>
-                    <Link to="/help" className="hover:text-primary_500 hover:underline flex items-center gap-1">
+                    <Link to="/need-help" className="hover:text-primary_500 hover:underline flex items-center gap-1">
                       <FaHeadset size={12} />
                       Help
                     </Link>
