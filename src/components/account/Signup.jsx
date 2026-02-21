@@ -3,53 +3,64 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Link, useNavigate } from "react-router-dom";
-import { 
-  FaRegUser, 
-  FaRegEnvelope, 
-  FaLock, 
-  FaEye, 
+import {
+  FaRegUser,
+  FaRegEnvelope,
+  FaLock,
+  FaEye,
   FaEyeSlash,
-  FaGoogle 
+  FaGoogle,
 } from "react-icons/fa";
 import BreadCrumb from "../commonComponent/breadcrumb/BreadCrumb";
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 
 // Zod validation schema
-const signupSchema = z.object({
-  fullName: z
-    .string()
-    .min(1, "Full name is required")
-    .min(3, "Full name must be at least 3 characters")
-    .max(50, "Full name must not exceed 50 characters")
-    .regex(/^[a-zA-Z\s]+$/, "Full name can only contain letters and spaces"),
-  
-  email: z
-    .string()
-    .min(1, "Email address is required")
-    .email("Please enter a valid email address (e.g., name@example.com)")
-    .toLowerCase(),
-  
-  password: z
-    .string()
-    .min(1, "Password is required")
-    .min(8, "Password must be at least 8 characters")
-    .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
-    .regex(/[a-z]/, "Password must contain at least one lowercase letter")
-    .regex(/[0-9]/, "Password must contain at least one number")
-    .regex(/[@$!%*?&]/, "Password must contain at least one special character (@$!%*?&)"),
-  
-  confirmPassword: z
-    .string()
-    .min(1, "Please confirm your password"),
-  
-  terms: z
-    .boolean()
-    .refine(val => val === true, "You must accept the terms and conditions"),
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "Passwords do not match",
-  path: ["confirmPassword"],
-});
+const signupSchema = z
+  .object({
+    fullName: z
+      .string()
+      .min(1, "Full name is required")
+      .min(3, "Full name must be at least 3 characters")
+      .max(50, "Full name must not exceed 50 characters")
+      .regex(/^[a-zA-Z\s]+$/, "Full name can only contain letters and spaces"),
+
+    email: z
+      .string()
+      .min(1, "Email address is required")
+      .email("Please enter a valid email address (e.g., name@example.com)")
+      .toLowerCase(),
+
+    password: z
+      .string()
+      .min(1, "Password is required")
+      .min(8, "Password must be at least 8 characters")
+      .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+      .regex(/[a-z]/, "Password must contain at least one lowercase letter")
+      .regex(/[0-9]/, "Password must contain at least one number")
+      .regex(
+        /[@$!%*?&]/,
+        "Password must contain at least one special character (@$!%*?&)",
+      ),
+
+    confirmPassword: z.string().min(1, "Please confirm your password"),
+
+    terms: z
+      .boolean()
+      .refine(
+        (val) => val === true,
+        "You must accept the terms and conditions",
+      ),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
 
 const Signup = () => {
+
+  const auth = getAuth();
+
+
   const navigate = useNavigate();
   const [showPass, setShowPass] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -86,21 +97,32 @@ const Signup = () => {
         fullName: data.fullName,
         email: data.email,
         password: data.password,
-        terms: data.terms
+        terms: data.terms,
       });
-      
+
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+
+      //firebase config
+      const userCreandtial = await createUserWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password,
+      );
+
+      console.log(userCreandtial.user);
+
       // Success - redirect to login or dashboard
+
       reset();
-      navigate("/login", { 
-        state: { message: "Account created successfully! Please login." } 
+      navigate("/login", {
+        state: { message: "Account created successfully! Please login." },
       });
-      
     } catch (error) {
       console.error("Signup error:", error);
-      setServerError(error.response?.data?.message || "Signup failed. Please try again.");
+      setServerError(
+        error.response?.data?.message || "Signup failed. Please try again.",
+      );
     }
   };
 
@@ -114,32 +136,34 @@ const Signup = () => {
   const getPasswordStrength = () => {
     const pwd = password || "";
     let strength = 0;
-    
+
     if (pwd.length >= 8) strength++;
     if (/[A-Z]/.test(pwd)) strength++;
     if (/[a-z]/.test(pwd)) strength++;
     if (/[0-9]/.test(pwd)) strength++;
     if (/[@$!%*?&]/.test(pwd)) strength++;
-    
+
     return strength;
   };
 
   const passwordStrength = getPasswordStrength();
-  const strengthText = ["Very Weak", "Weak", "Fair", "Good", "Strong"][passwordStrength - 1] || "Very Weak";
-  const strengthColor = [
-    "bg-red-500",
-    "bg-orange-500",
-    "bg-yellow-500",
-    "bg-blue-500",
-    "bg-green-500"
-  ][passwordStrength - 1] || "bg-gray-200";
+  const strengthText =
+    ["Very Weak", "Weak", "Fair", "Good", "Strong"][passwordStrength - 1] ||
+    "Very Weak";
+  const strengthColor =
+    [
+      "bg-red-500",
+      "bg-orange-500",
+      "bg-yellow-500",
+      "bg-blue-500",
+      "bg-green-500",
+    ][passwordStrength - 1] || "bg-gray-200";
 
   return (
     <div>
       <BreadCrumb />
       <div className="min-h-screen flex items-center justify-center bg-gray_50 font-publicSans py-8 px-4">
         <div className="w-full max-w-md bg-gray_00 rounded-2xl shadow-lg p-8">
-
           {/* Header */}
           <div className="text-center mb-8">
             <h1 className="heading3 text-gray_900">Create Account 🚀</h1>
@@ -166,19 +190,22 @@ const Signup = () => {
                 Full Name <span className="text-red-500">*</span>
               </label>
               <div className="relative mt-1">
-                <FaRegUser className={`absolute left-4 top-1/2 -translate-y-1/2 transition-colors ${
-                  errors.fullName ? "text-red-400" : "text-gray_400"
-                }`} />
+                <FaRegUser
+                  className={`absolute left-4 top-1/2 -translate-y-1/2 transition-colors ${
+                    errors.fullName ? "text-red-400" : "text-gray_400"
+                  }`}
+                />
                 <input
                   type="text"
                   {...register("fullName")}
                   placeholder="John Doe"
                   className={`w-full pl-11 pr-4 py-3 rounded-xl bg-gray_50 border transition outline-none
-                    ${errors.fullName 
-                      ? "border-red-500 bg-red-50 focus:border-red-500" 
-                      : touchedFields.fullName && !errors.fullName
-                      ? "border-green-500 bg-green-50"
-                      : "border-gray_100 focus:border-primary_500 focus:bg-gray_00"
+                    ${
+                      errors.fullName
+                        ? "border-red-500 bg-red-50 focus:border-red-500"
+                        : touchedFields.fullName && !errors.fullName
+                          ? "border-green-500 bg-green-50"
+                          : "border-gray_100 focus:border-primary_500 focus:bg-gray_00"
                     }`}
                 />
               </div>
@@ -196,19 +223,22 @@ const Signup = () => {
                 Email Address <span className="text-red-500">*</span>
               </label>
               <div className="relative mt-1">
-                <FaRegEnvelope className={`absolute left-4 top-1/2 -translate-y-1/2 transition-colors ${
-                  errors.email ? "text-red-400" : "text-gray_400"
-                }`} />
+                <FaRegEnvelope
+                  className={`absolute left-4 top-1/2 -translate-y-1/2 transition-colors ${
+                    errors.email ? "text-red-400" : "text-gray_400"
+                  }`}
+                />
                 <input
                   type="email"
                   {...register("email")}
                   placeholder="example@email.com"
                   className={`w-full pl-11 pr-4 py-3 rounded-xl bg-gray_50 border transition outline-none
-                    ${errors.email 
-                      ? "border-red-500 bg-red-50 focus:border-red-500" 
-                      : touchedFields.email && !errors.email
-                      ? "border-green-500 bg-green-50"
-                      : "border-gray_100 focus:border-primary_500 focus:bg-gray_00"
+                    ${
+                      errors.email
+                        ? "border-red-500 bg-red-50 focus:border-red-500"
+                        : touchedFields.email && !errors.email
+                          ? "border-green-500 bg-green-50"
+                          : "border-gray_100 focus:border-primary_500 focus:bg-gray_00"
                     }`}
                 />
               </div>
@@ -226,19 +256,22 @@ const Signup = () => {
                 Password <span className="text-red-500">*</span>
               </label>
               <div className="relative mt-1">
-                <FaLock className={`absolute left-4 top-1/2 -translate-y-1/2 transition-colors ${
-                  errors.password ? "text-red-400" : "text-gray_400"
-                }`} />
+                <FaLock
+                  className={`absolute left-4 top-1/2 -translate-y-1/2 transition-colors ${
+                    errors.password ? "text-red-400" : "text-gray_400"
+                  }`}
+                />
                 <input
                   type={showPass ? "text" : "password"}
                   {...register("password")}
                   placeholder="••••••••"
                   className={`w-full pl-11 pr-11 py-3 rounded-xl bg-gray_50 border transition outline-none
-                    ${errors.password 
-                      ? "border-red-500 bg-red-50 focus:border-red-500" 
-                      : touchedFields.password && !errors.password
-                      ? "border-green-500 bg-green-50"
-                      : "border-gray_100 focus:border-primary_500 focus:bg-gray_00"
+                    ${
+                      errors.password
+                        ? "border-red-500 bg-red-50 focus:border-red-500"
+                        : touchedFields.password && !errors.password
+                          ? "border-green-500 bg-green-50"
+                          : "border-gray_100 focus:border-primary_500 focus:bg-gray_00"
                     }`}
                 />
                 <button
@@ -250,7 +283,7 @@ const Signup = () => {
                   {showPass ? <FaEyeSlash /> : <FaEye />}
                 </button>
               </div>
-              
+
               {/* Password Strength Indicator */}
               {password && password.length > 0 && (
                 <div className="mt-2">
@@ -259,40 +292,54 @@ const Signup = () => {
                       <div
                         key={level}
                         className={`flex-1 h-full rounded transition-all ${
-                          level <= passwordStrength ? strengthColor : "bg-gray-200"
+                          level <= passwordStrength
+                            ? strengthColor
+                            : "bg-gray-200"
                         }`}
                       />
                     ))}
                   </div>
-                  <p className={`text-xs mt-1 ${passwordStrength >= 3 ? "text-green-600" : "text-orange-600"}`}>
+                  <p
+                    className={`text-xs mt-1 ${passwordStrength >= 3 ? "text-green-600" : "text-orange-600"}`}
+                  >
                     Password Strength: {strengthText}
                   </p>
                 </div>
               )}
-              
+
               {errors.password && (
                 <p className="text-red-500 text-xs mt-1 flex items-center gap-1">
                   <span>⚠️</span>
                   {errors.password.message}
                 </p>
               )}
-              
+
               {/* Password Requirements */}
               {touchedFields.password && !errors.password && (
                 <ul className="text-xs text-gray-500 mt-2 space-y-1">
                   <li className={password?.length >= 8 ? "text-green-600" : ""}>
                     ✓ At least 8 characters
                   </li>
-                  <li className={/[A-Z]/.test(password) ? "text-green-600" : ""}>
+                  <li
+                    className={/[A-Z]/.test(password) ? "text-green-600" : ""}
+                  >
                     ✓ One uppercase letter
                   </li>
-                  <li className={/[a-z]/.test(password) ? "text-green-600" : ""}>
+                  <li
+                    className={/[a-z]/.test(password) ? "text-green-600" : ""}
+                  >
                     ✓ One lowercase letter
                   </li>
-                  <li className={/[0-9]/.test(password) ? "text-green-600" : ""}>
+                  <li
+                    className={/[0-9]/.test(password) ? "text-green-600" : ""}
+                  >
                     ✓ One number
                   </li>
-                  <li className={/[@$!%*?&]/.test(password) ? "text-green-600" : ""}>
+                  <li
+                    className={
+                      /[@$!%*?&]/.test(password) ? "text-green-600" : ""
+                    }
+                  >
                     ✓ One special character (@$!%*?&)
                   </li>
                 </ul>
@@ -305,19 +352,23 @@ const Signup = () => {
                 Confirm Password <span className="text-red-500">*</span>
               </label>
               <div className="relative mt-1">
-                <FaLock className={`absolute left-4 top-1/2 -translate-y-1/2 transition-colors ${
-                  errors.confirmPassword ? "text-red-400" : "text-gray_400"
-                }`} />
+                <FaLock
+                  className={`absolute left-4 top-1/2 -translate-y-1/2 transition-colors ${
+                    errors.confirmPassword ? "text-red-400" : "text-gray_400"
+                  }`}
+                />
                 <input
                   type={showConfirm ? "text" : "password"}
                   {...register("confirmPassword")}
                   placeholder="••••••••"
                   className={`w-full pl-11 pr-11 py-3 rounded-xl bg-gray_50 border transition outline-none
-                    ${errors.confirmPassword 
-                      ? "border-red-500 bg-red-50 focus:border-red-500" 
-                      : touchedFields.confirmPassword && !errors.confirmPassword
-                      ? "border-green-500 bg-green-50"
-                      : "border-gray_100 focus:border-primary_500 focus:bg-gray_00"
+                    ${
+                      errors.confirmPassword
+                        ? "border-red-500 bg-red-50 focus:border-red-500"
+                        : touchedFields.confirmPassword &&
+                            !errors.confirmPassword
+                          ? "border-green-500 bg-green-50"
+                          : "border-gray_100 focus:border-primary_500 focus:bg-gray_00"
                     }`}
                 />
                 <button
@@ -345,13 +396,19 @@ const Signup = () => {
                 className="mt-1 cursor-pointer"
                 id="terms"
               />
-              <label htmlFor="terms" className="tiny_400 text-gray-500 cursor-pointer">
+              <label
+                htmlFor="terms"
+                className="tiny_400 text-gray-500 cursor-pointer"
+              >
                 I agree to the{" "}
                 <Link to="/terms" className="text-primary_500 hover:underline">
                   Terms & Conditions
                 </Link>{" "}
                 and{" "}
-                <Link to="/privacy" className="text-primary_500 hover:underline">
+                <Link
+                  to="/privacy"
+                  className="text-primary_500 hover:underline"
+                >
                   Privacy Policy
                 </Link>
                 <span className="text-red-500">*</span>
@@ -372,9 +429,25 @@ const Signup = () => {
             >
               {isSubmitting ? (
                 <>
-                  <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  <svg
+                    className="animate-spin h-5 w-5 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
                   </svg>
                   Creating Account...
                 </>
@@ -404,7 +477,10 @@ const Signup = () => {
             {/* Footer */}
             <p className="tiny_400 text-gray_500 text-center mt-6">
               Already have an account?{" "}
-              <Link to="/login" className="text-primary_500 hover:underline font-medium">
+              <Link
+                to="/login"
+                className="text-primary_500 hover:underline font-medium"
+              >
                 Login
               </Link>
             </p>

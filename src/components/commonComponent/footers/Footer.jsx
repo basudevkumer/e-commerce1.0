@@ -103,7 +103,7 @@ const Footer = () => {
               <ul className="flex flex-col gap-y-[8px]">
                 {categoryData?.slice(0, 7)?.map((items, index) => {
                   return (
-                    <Link to={"/shop"} key={items.id}>
+                    <Link to={"/shop"} key={index}>
                       <li
                         className="group  flex items-center gap-x-2 cursor-pointer relative overflow-hidden "
                         onClick={() => handleCatItems(items)}

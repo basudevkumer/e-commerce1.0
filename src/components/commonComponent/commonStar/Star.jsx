@@ -11,11 +11,11 @@ const Star = ({ starsCard }) => {
       {[...Array(5)].map((_, index) => {
         let startValue = index + 1;
         if (rating >= startValue) {
-          return <span className="text-xl  text-primary_500">{starIcon[0].icon}</span>;
+          return <span className="text-xl  text-primary_500" key={index}>{starIcon[0].icon}</span>;
         } else if (rating >= startValue - 0.5) {
-          return <span className="text-xl  text-primary_500">{starIcon[1].icon}</span>;
+          return <span className="text-xl  text-primary_500" key={index}>{starIcon[1].icon}</span>;
         } else {
-          return <span className="text-xl  text-primary_500">{starIcon[2].icon}</span>;
+          return <span className="text-xl  text-primary_500" key={index}>{starIcon[2].icon}</span>;
         }
       })}
     </div>

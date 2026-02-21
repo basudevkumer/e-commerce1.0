@@ -3,23 +3,24 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { 
-  FaEye, 
-  FaEyeSlash, 
-  FaGoogle, 
-  FaFacebook, 
+import {
+  FaEye,
+  FaEyeSlash,
+  FaGoogle,
+  FaFacebook,
   FaTwitter,
   FaLock,
   FaRocket,
   FaHeadset,
   FaShieldAlt,
   FaCheckCircle,
-  FaArrowRight
+  FaArrowRight,
 } from "react-icons/fa";
 import { MdEmail, MdPassword } from "react-icons/md";
 import { RiErrorWarningFill } from "react-icons/ri";
 import { BiLogInCircle } from "react-icons/bi";
 import BreadCrumb from "../commonComponent/breadcrumb/BreadCrumb";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 // Zod validation schema
 const signInSchema = z.object({
@@ -35,11 +36,15 @@ const signInSchema = z.object({
 });
 
 const SignIn = () => {
+  const auth = getAuth();
+
   const navigate = useNavigate();
   const location = useLocation();
   const [showPassword, setShowPassword] = useState(false);
   const [serverError, setServerError] = useState("");
-  const [successMessage, setSuccessMessage] = useState(location.state?.message || "");
+  const [successMessage, setSuccessMessage] = useState(
+    location.state?.message || "",
+  );
 
   // React Hook Form with Zod
   const {
@@ -65,23 +70,30 @@ const SignIn = () => {
       console.log("Login Data:", {
         email: data.email,
         password: data.password,
-        rememberMe: data.rememberMe
+        rememberMe: data.rememberMe,
       });
-      
+
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      // firebase
+      const userCreandtial = await signInWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password,
+      );
+      console.log(userCreandtial.user);
+
       // Success - redirect to dashboard or home
       reset();
-      
+
       // Show success message and redirect
       alert("Login successful!");
-      
+
       // Redirect based on user role or intended page
-      navigate("/", { 
-        state: { message: "Welcome back!" } 
+      navigate("/", {
+        state: { message: "Welcome back!" },
       });
-      
     } catch (error) {
       console.error("Sign in error:", error);
       setServerError("Invalid email or password. Please try again.");
@@ -104,14 +116,17 @@ const SignIn = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray_50 to-gray_100 font-publicSans">
       <BreadCrumb />
-      
+
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-md mx-auto">
           {/* Success Message */}
           {successMessage && (
             <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg animate-slideDown">
               <p className="text-green-600 text-sm flex items-center gap-2">
-                <FaCheckCircle className="text-green-500 flex-shrink-0" size={18} />
+                <FaCheckCircle
+                  className="text-green-500 flex-shrink-0"
+                  size={18}
+                />
                 <span>{successMessage}</span>
               </p>
             </div>
@@ -124,7 +139,7 @@ const SignIn = () => {
               {/* Decorative Elements */}
               <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-10 -mt-10"></div>
               <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full -ml-8 -mb-8"></div>
-              
+
               <div className="relative z-10">
                 <div className="flex items-center gap-3 mb-3">
                   <BiLogInCircle className="text-white text-3xl" />
@@ -143,7 +158,10 @@ const SignIn = () => {
               {serverError && (
                 <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg animate-shake">
                   <p className="text-red-600 text-sm flex items-center gap-2">
-                    <RiErrorWarningFill className="text-red-500 flex-shrink-0" size={18} />
+                    <RiErrorWarningFill
+                      className="text-red-500 flex-shrink-0"
+                      size={18}
+                    />
                     <span>{serverError}</span>
                   </p>
                 </div>
@@ -153,7 +171,10 @@ const SignIn = () => {
               <form onSubmit={handleSubmit(onSubmit)} noValidate>
                 {/* Email Field */}
                 <div className="mb-5">
-                  <label htmlFor="email" className="block label4 text-gray_700 mb-2">
+                  <label
+                    htmlFor="email"
+                    className="block label4 text-gray_700 mb-2"
+                  >
                     <span className="flex items-center gap-2">
                       <MdEmail className="text-primary_500" />
                       Email Address <span className="text-red-500">*</span>
@@ -165,9 +186,10 @@ const SignIn = () => {
                     {...register("email")}
                     onFocus={handleInputFocus}
                     className={`w-full h-14 px-4 rounded-xl border-2 bg-gray_50 outline-none transition-all
-                      ${errors.email 
-                        ? "border-red-500 bg-red-50 focus:border-red-500" 
-                        : "border-gray_200 focus:border-primary_500 focus:bg-gray_00"
+                      ${
+                        errors.email
+                          ? "border-red-500 bg-red-50 focus:border-red-500"
+                          : "border-gray_200 focus:border-primary_500 focus:bg-gray_00"
                       }`}
                     placeholder="Enter your email address"
                   />
@@ -188,15 +210,15 @@ const SignIn = () => {
                         Password <span className="text-red-500">*</span>
                       </span>
                     </label>
-                    <Link 
-                      to="/forgot-password" 
+                    <Link
+                      to="/forgot-password"
                       className="text-sm text-primary_500 hover:text-primary_600 hover:underline flex items-center gap-1"
                     >
                       <FaLock size={12} />
                       Forgot Password?
                     </Link>
                   </div>
-                  
+
                   <div className="relative">
                     <input
                       type={showPassword ? "text" : "password"}
@@ -204,9 +226,10 @@ const SignIn = () => {
                       {...register("password")}
                       onFocus={handleInputFocus}
                       className={`w-full h-14 px-4 rounded-xl border-2 bg-gray_50 outline-none transition-all pr-12
-                        ${errors.password 
-                          ? "border-red-500 bg-red-50 focus:border-red-500" 
-                          : "border-gray_200 focus:border-primary_500 focus:bg-gray_00"
+                        ${
+                          errors.password
+                            ? "border-red-500 bg-red-50 focus:border-red-500"
+                            : "border-gray_200 focus:border-primary_500 focus:bg-gray_00"
                         }`}
                       placeholder="Enter your password"
                     />
@@ -216,7 +239,11 @@ const SignIn = () => {
                       className="absolute right-4 top-1/2 -translate-y-1/2 text-gray_500 hover:text-gray_700 transition-colors"
                       tabIndex="-1"
                     >
-                      {showPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
+                      {showPassword ? (
+                        <FaEyeSlash size={20} />
+                      ) : (
+                        <FaEye size={20} />
+                      )}
                     </button>
                   </div>
                   {errors.password && (
@@ -235,7 +262,10 @@ const SignIn = () => {
                     {...register("rememberMe")}
                     className="w-4 h-4 rounded border-gray_300 text-primary_500 focus:ring-primary_500"
                   />
-                  <label htmlFor="rememberMe" className="text-sm text-gray_600 cursor-pointer flex items-center gap-1">
+                  <label
+                    htmlFor="rememberMe"
+                    className="text-sm text-gray_600 cursor-pointer flex items-center gap-1"
+                  >
                     <FaShieldAlt className="text-gray_400" size={14} />
                     Remember me for 30 days
                   </label>
@@ -249,16 +279,35 @@ const SignIn = () => {
                 >
                   {isSubmitting ? (
                     <>
-                      <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      <svg
+                        className="animate-spin h-5 w-5 text-white"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
                       </svg>
                       Signing in...
                     </>
                   ) : (
                     <>
                       Sign In
-                      <BiLogInCircle className="group-hover:translate-x-1 transition-transform" size={20} />
+                      <BiLogInCircle
+                        className="group-hover:translate-x-1 transition-transform"
+                        size={20}
+                      />
                     </>
                   )}
                 </button>
@@ -312,12 +361,15 @@ const SignIn = () => {
                 <div className="text-center">
                   <p className="text-gray_600 sm_400">
                     Don't have an account?{" "}
-                    <Link 
-                      to="/signup" 
+                    <Link
+                      to="/signup"
                       className="text-primary_500 hover:text-primary_600 font-semibold hover:underline inline-flex items-center gap-1 group"
                     >
                       Create free account
-                      <FaArrowRight className="group-hover:translate-x-1 transition-transform" size={12} />
+                      <FaArrowRight
+                        className="group-hover:translate-x-1 transition-transform"
+                        size={12}
+                      />
                     </Link>
                   </p>
                 </div>
@@ -325,16 +377,25 @@ const SignIn = () => {
                 {/* Additional Links */}
                 <div className="mt-6 pt-6 border-t border-gray_100">
                   <div className="flex justify-center gap-4 text-xs text-gray_500">
-                    <Link to="/need-help" className="hover:text-primary_500 hover:underline flex items-center gap-1">
+                    <Link
+                      to="/need-help"
+                      className="hover:text-primary_500 hover:underline flex items-center gap-1"
+                    >
                       <FaShieldAlt size={12} />
                       Privacy
                     </Link>
                     <span>•</span>
-                    <Link to="/customer-support" className="hover:text-primary_500 hover:underline">
+                    <Link
+                      to="/customer-support"
+                      className="hover:text-primary_500 hover:underline"
+                    >
                       Terms
                     </Link>
                     <span>•</span>
-                    <Link to="/need-help" className="hover:text-primary_500 hover:underline flex items-center gap-1">
+                    <Link
+                      to="/need-help"
+                      className="hover:text-primary_500 hover:underline flex items-center gap-1"
+                    >
                       <FaHeadset size={12} />
                       Help
                     </Link>
@@ -351,7 +412,9 @@ const SignIn = () => {
                 <FaLock className="mx-auto" />
               </div>
               <p className="text-xs text-gray_600 font-medium">Secure Login</p>
-              <p className="text-[10px] text-gray_400 mt-1">128-bit encryption</p>
+              <p className="text-[10px] text-gray_400 mt-1">
+                128-bit encryption
+              </p>
             </div>
             <div className="text-center p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-all group">
               <div className="text-3xl mb-2 text-primary_500 group-hover:scale-110 transition-transform">
@@ -391,17 +454,31 @@ const SignIn = () => {
             transform: translateY(0);
           }
         }
-        
+
         @keyframes shake {
-          0%, 100% { transform: translateX(0); }
-          10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
-          20%, 40%, 60%, 80% { transform: translateX(2px); }
+          0%,
+          100% {
+            transform: translateX(0);
+          }
+          10%,
+          30%,
+          50%,
+          70%,
+          90% {
+            transform: translateX(-2px);
+          }
+          20%,
+          40%,
+          60%,
+          80% {
+            transform: translateX(2px);
+          }
         }
-        
+
         .animate-slideDown {
           animation: slideDown 0.3s ease-out;
         }
-        
+
         .animate-shake {
           animation: shake 0.5s ease-in-out;
         }

@@ -31,7 +31,7 @@ const Index = () => {
           <div className="grid grid-cols-6 gap-x-[30px]">
             {[...new Array(6)].map((_, index) => {
               return (
-                <div className="shadow-xl border border-gray-100 w-full h-[236px] flex flex-col items-center gap-y-4 pt-[24px] px-[28px] rounded-md animate-pulse">
+                <div className="shadow-xl border border-gray-100 w-full h-[236px] flex flex-col items-center gap-y-4 pt-[24px] px-[28px] rounded-md animate-pulse " key={index}>
                   {/* Image Skeleton */}
                   <div className="w-24 h-24 bg-gray-200 rounded-full border-4 border-gray-100"></div>
 
