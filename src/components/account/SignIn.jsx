@@ -88,12 +88,13 @@ const SignIn = () => {
       reset();
 
       // Show success message and redirect
-      alert("Login successful!");
+      // alert("Login successful!");
 
       // Redirect based on user role or intended page
-      navigate("/", {
-        state: { message: "Welcome back!" },
-      });
+      const from = location.state?.from?.pathname || document.referrer || "/";
+      console.log(from);
+
+      navigate(from, { replace: true });
     } catch (error) {
       console.error("Sign in error:", error);
       setServerError("Invalid email or password. Please try again.");

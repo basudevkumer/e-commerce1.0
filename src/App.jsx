@@ -17,6 +17,7 @@ import Checkout from "./pages/Checkout";
 import OrderSuccess from "./pages/OrderSuccess";
 import Signup from "./components/account/Signup";
 import SignIn from "./components/account/SignIn";
+import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
 
 const App = () => {
   const queryClient = new QueryClient();
@@ -32,16 +33,45 @@ const App = () => {
               <Route path="/shop" element={<Shop />} />
               <Route path="/product-details/:id" element={<ProductDetails />} />
               <Route path="/shopping-card" element={<ShoppingCardPg />} />
-              <Route path="/update-card" element={<UpdateCard />} />
+
               <Route path="/compare" element={<Compare />} />
-              <Route path="/wishlist" element={<Wishlist />} />
+
               <Route path="/customer-support" element={<CustomerSupport />} />
               <Route path="/need-help" element={<NeedHelp />} />
-              <Route path="/checkout" element={<Checkout />} />
-              <Route path="/order-success" element={<OrderSuccess />} />
+
               <Route path="/signup" element={<Signup />} />
               <Route path="/login" element={<SignIn />} />
-              <Route path="*" element={<div>Here Find Everything....</div>} />
+              <Route path="/order-success" element={<OrderSuccess />} />
+
+              {/* protected route */}
+              <Route
+                path="/wishlist"
+                element={
+                  <ProtectedRoute>
+                    <Wishlist />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/checkout"
+                element={
+                  <ProtectedRoute>
+                    <Checkout />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/order-success"
+                element={
+                  <ProtectedRoute>
+                    <OrderSuccess />
+                  </ProtectedRoute>
+                }
+              />
+              {/* 404 page not fond */}
+              <Route path="*" element={<div>404 page not font...</div>} />
             </Route>
           </Routes>
         </BrowserRouter>
