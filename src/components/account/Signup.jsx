@@ -389,7 +389,7 @@ const Signup = () => {
             </div>
 
             {/* Terms */}
-            <div className="flex items-start gap-2 mb-6">
+            <div className="flex items-center gap-x-3 mb-6">
               <input
                 type="checkbox"
                 {...register("terms")}
