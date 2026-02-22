@@ -7,8 +7,12 @@ import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-const AddToCartPop = () => {
-  // data form use Selector
+const AddToCartPop = ({setIsAccountOpen}) => {
+  // manage event
+  const handleClicked  = ()=>{
+    setIsAccountOpen(null)
+  }
+   // data form use Selector
 
   const subTotalCost = useSelector((state) => state.subTotal.value);
 
@@ -108,12 +112,16 @@ const AddToCartPop = () => {
       </div>
 
       <div class="mt-4 space-y-2">
-        <Button
-          className={`!text-gray_00  !bg-primary_500 justify-center`}
-          children={"Checkout now"}
-        />
+        <Link to={"/checkout"}>
+          {" "}
+          <Button
+            className={`!text-gray_00  !bg-primary_500 justify-center`}
+            children={"Checkout now"}
+            onClick={handleClicked}
+          />
+        </Link>
         <Link to={"./shopping-card"}>
-          <button className="border-2 border-primary_100 text-primary_500 w-full py-[10px] cursor-pointer">
+          <button className="border-2 border-primary_100 text-primary_500 w-full py-[10px] cursor-pointer"  onClick={handleClicked}>
             View Cart
           </button>
         </Link>

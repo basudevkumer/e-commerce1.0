@@ -134,7 +134,7 @@ const NavMiddle = () => {
 
                       {isActive && (
                         <div className="absolute w-[380px] bg-rose-400 top-12 left-[-355px] z-60">
-                          <AddToCartPop />
+                          <AddToCartPop setIsAccountOpen={setIsAccountOpen} />
                         </div>
                       )}
                     </li>
