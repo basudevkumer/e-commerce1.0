@@ -475,3 +475,198 @@
   scrollbar-width: thin;
   scrollbar-color: transparent transparent;
 }
+
+/* LoadingSpinner.css */
+@keyframes orbitA {
+  from {
+    transform: rotate(0deg) translateX(28px) rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg) translateX(28px) rotate(-360deg);
+  }
+}
+@keyframes orbitB {
+  from {
+    transform: rotate(120deg) translateX(28px) rotate(-120deg);
+  }
+  to {
+    transform: rotate(480deg) translateX(28px) rotate(-480deg);
+  }
+}
+@keyframes orbitC {
+  from {
+    transform: rotate(240deg) translateX(28px) rotate(-240deg);
+  }
+  to {
+    transform: rotate(600deg) translateX(28px) rotate(-600deg);
+  }
+}
+@keyframes corePulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.18);
+    opacity: 0.7;
+  }
+}
+@keyframes ringRotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+@keyframes fadeUp {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: translateY(4px);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.loader-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  gap: 36px;
+}
+.spinner-scene {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ring {
+  position: absolute;
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  border: 1px solid #d1d5db;
+  animation: ringRotate 8s linear infinite;
+}
+.ring::before {
+  content: "";
+  position: absolute;
+  top: -1.5px;
+  left: 30%;
+  width: 40%;
+  height: 2px;
+  border-radius: 2px;
+  background: #111827;
+}
+.dot-orbit {
+  position: absolute;
+  border-radius: 50%;
+  background: #111827;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  animation-iteration-count: infinite;
+  animation-duration: 1.6s;
+}
+.dot-orbit.a {
+  width: 8px;
+  height: 8px;
+  top: calc(50% - 4px);
+  left: calc(50% - 4px);
+  animation-name: orbitA;
+  opacity: 1;
+}
+.dot-orbit.b {
+  width: 6px;
+  height: 6px;
+  top: calc(50% - 3px);
+  left: calc(50% - 3px);
+  animation-name: orbitB;
+  opacity: 0.55;
+}
+.dot-orbit.c {
+  width: 5px;
+  height: 5px;
+  top: calc(50% - 2.5px);
+  left: calc(50% - 2.5px);
+  animation-name: orbitC;
+  opacity: 0.25;
+}
+.core {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #111827;
+  animation: corePulse 1.6s ease-in-out infinite;
+  z-index: 2;
+}
+.label-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.label-text {
+  font-size: 13px;
+  font-weight: 500;
+  color: #6b7280;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.bar-row {
+  display: flex;
+  gap: 5px;
+  align-items: flex-end;
+}
+.bar {
+  width: 3px;
+  border-radius: 2px;
+  background: #111827;
+  animation: fadeUp 1.2s ease-in-out infinite;
+}
+.bar:nth-child(1) {
+  height: 10px;
+}
+.bar:nth-child(2) {
+  height: 16px;
+}
+.bar:nth-child(3) {
+  height: 22px;
+}
+.bar:nth-child(4) {
+  height: 16px;
+}
+.bar:nth-child(5) {
+  height: 10px;
+}
+
+/*  for page not found */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+@keyframes drift {
+  0% {
+    transform: translateX(0) translateY(0) rotate(0deg);
+  }
+  33% {
+    transform: translateX(6px) translateY(-8px) rotate(8deg);
+  }
+  66% {
+    transform: translateX(-5px) translateY(4px) rotate(-5deg);
+  }
+  100% {
+    transform: translateX(0) translateY(0) rotate(0deg);
+  }
+}
