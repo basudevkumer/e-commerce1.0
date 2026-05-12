@@ -33,11 +33,11 @@ const Home = () => {
       <BestDealContainter />
       <Subscribe />
 
-      {isOpen && (
+      {/* {isOpen && (
         <Suspense fallback={null}>
           <HomePopUp eventHandle={handlePopUp} />
         </Suspense>
-      )}
+      )} */}
     </>
   );
 };
